@@ -51,7 +51,7 @@ class CalculatorModel {
 
             case '=':
                 this.evalStack();
-                
+
             default:
                 return;
         }
@@ -77,7 +77,8 @@ class CalculatorModel {
                 result = l * r;
                 break;
             case '/':
-                result = l / r;
+                result = (l / r).toFixed(15);
+                result = parseFloat(result);
                 break;
             default:
                 return;

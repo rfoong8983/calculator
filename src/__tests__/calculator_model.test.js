@@ -121,7 +121,7 @@ describe('adds values to a stack', () => {
 
             test('multiply will display the last input', () => {
                 const calc = new CalculatorModel();
-                calc.addToStack(1);
+                calc.addToStack(3);
                 calc.performOp('-');
                 calc.addToStack(2);
                 calc.performOp('*');
@@ -130,7 +130,7 @@ describe('adds values to a stack', () => {
 
             test('divide will evaluate the sum of the last two vals on the stack', () => {
                 const calc = new CalculatorModel();
-                calc.addToStack(1);
+                calc.addToStack(3);
                 calc.performOp('-');
                 calc.addToStack(2);
                 calc.performOp('/');
@@ -164,20 +164,20 @@ describe('adds values to a stack', () => {
 
             test('multiply will display the last input', () => {
                 const calc = new CalculatorModel();
-                calc.addToStack(1);
+                calc.addToStack(3);
                 calc.performOp('*');
                 calc.addToStack(2);
                 calc.performOp('*');
-                expect(calc.currentDisplay).toEqual(2);
+                expect(calc.currentDisplay).toEqual(6);
             });
 
             test('divide will evaluate the sum of the last two vals on the stack', () => {
                 const calc = new CalculatorModel();
-                calc.addToStack(1);
+                calc.addToStack(3);
                 calc.performOp('*');
                 calc.addToStack(2);
                 calc.performOp('/');
-                expect(calc.currentDisplay).toEqual(2);
+                expect(calc.currentDisplay).toEqual(6);
             });
         })
 
@@ -217,6 +217,42 @@ describe('adds values to a stack', () => {
                 calc.addToStack(2);
                 calc.performOp('/');
                 expect(calc.currentDisplay).toEqual(0.5);
+            });
+
+            test('(long decimals) add will evaluate the last operation', () => {
+                const calc = new CalculatorModel();
+                calc.addToStack(2);
+                calc.performOp('/');
+                calc.addToStack(3);
+                calc.performOp('+');
+                expect(calc.currentDisplay).toEqual(0.666666666666667);
+            });
+
+            test('(long decimals) subtract will evaluate the last operation', () => {
+                const calc = new CalculatorModel();
+                calc.addToStack(2);
+                calc.performOp('/');
+                calc.addToStack(3);
+                calc.performOp('-');
+                expect(calc.currentDisplay).toEqual(0.666666666666667);
+            });
+
+            test('(long decimals) multiply will evaluate the the last operation', () => {
+                const calc = new CalculatorModel();
+                calc.addToStack(2);
+                calc.performOp('/');
+                calc.addToStack(3);
+                calc.performOp('*');
+                expect(calc.currentDisplay).toEqual(0.666666666666667);
+            });
+
+            test('(long decimals) divide will evaluate the last operation', () => {
+                const calc = new CalculatorModel();
+                calc.addToStack(2);
+                calc.performOp('/');
+                calc.addToStack(3);
+                calc.performOp('/');
+                expect(calc.currentDisplay).toEqual(0.666666666666667);
             });
         });
     });
