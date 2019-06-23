@@ -159,7 +159,7 @@ describe('adds values to a stack', () => {
                 calc.multiply();
                 calc.addToStack(3);
                 calc.subtract();
-                expect(calc.currentDisplay).toEqual(-3);
+                expect(calc.currentDisplay).toEqual(-5);
             });
 
             test('multiply will display the last input', () => {

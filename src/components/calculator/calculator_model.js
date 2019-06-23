@@ -77,7 +77,7 @@ class CalculatorModel {
         if (this.lastOperationIsNotSameAs('+')) {
             this.operatorStack.pop();
             this.operatorStack.push('+');
-        } else if (this.isMultOrDiv() || this.lastOperationIsSameAs('+')) {
+        } else if (this.isMultOrDiv() || this.lastOperationIsSameAs('+') || this.lastOperationIsSameAs('-')) {
             this.evalStack();
         } else {
             this.operatorStack.push('+');
@@ -86,10 +86,10 @@ class CalculatorModel {
     }
 
     subtract() {
-        if (this.lastInputIsOperation() && this.lastOperationIsNotSameAs('-')) {
+        if (this.lastOperationIsNotSameAs('-')) {
             this.operatorStack.pop();
             this.operatorStack.push('-');
-        } else if (this.isMultOrDiv()) {
+        } else if (this.isMultOrDiv() || this.lastOperationIsSameAs('+') || this.lastOperationIsSameAs('-')) {
             this.evalStack();
         } else {
             this.operatorStack.push('-');
@@ -100,10 +100,10 @@ class CalculatorModel {
     }
 
     multiply() {
-        if (this.lastInputIsOperation() && this.lastOperationIsNotSameAs('*')) {
+        if (this.lastOperationIsNotSameAs('*')) {
             this.operatorStack.pop();
             this.operatorStack.push('*');
-        } else if (this.isMultOrDiv()) {
+        } else if (this.isMultOrDiv() || this.lastOperationIsSameAs('*')) {
             this.equals();
         } else {
             this.operatorStack.push('*');
@@ -113,10 +113,10 @@ class CalculatorModel {
     }
 
     divide() {
-        if (this.lastInputIsOperation() && this.lastOperationIsNotSameAs('/')) {
+        if (this.lastOperationIsNotSameAs('/')) {
             this.operatorStack.pop();
             this.operatorStack.push('/');
-        }else if (this.isMultOrDiv()) {
+        } else if (this.isMultOrDiv() || this.lastOperationIsSameAs('/')) {
             this.equals();
         } else {
             this.operatorStack.push('/');
