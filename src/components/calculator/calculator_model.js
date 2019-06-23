@@ -41,17 +41,23 @@ class CalculatorModel {
                     this.operatorStack.pop();
                     this.operatorStack.push(op);
                 } else if (this.isMultOrDiv()) {
-                    this.equals();
+                    this.evalLastTwoNums();
                 } else {
                     this.operatorStack.push(op);
                     this.lastInput = op;
                 }
 
                 break;
+
+            case '=':
+                this.evalStack();
+                
+            default:
+                return;
         }
     }
 
-    equals() {
+    evalLastTwoNums() {
         const op = this.operatorStack.pop();
         let l;
         let r;
@@ -73,6 +79,8 @@ class CalculatorModel {
             case '/':
                 result = l / r;
                 break;
+            default:
+                return;
         }
 
         this.stack.push(result);
@@ -83,7 +91,7 @@ class CalculatorModel {
 
     evalStack() {
         while (this.stack.length && this.operatorStack.length) {
-            this.equals();
+            this.evalLastTwoNums();
         }
     }
 
@@ -161,7 +169,7 @@ export default CalculatorModel;
     //         this.operatorStack.pop();
     //         this.operatorStack.push('*');
     //     } else if (this.isMultOrDiv()) {
-    //         this.equals();
+    //         this.evalLastTwoNums();
     //     } else {
     //         this.operatorStack.push('*');
     //         this.lastInput = '*';
@@ -174,7 +182,7 @@ export default CalculatorModel;
     //         this.operatorStack.pop();
     //         this.operatorStack.push('/');
     //     } else if (this.isMultOrDiv()) {
-    //         this.equals();
+    //         this.evalLastTwoNums();
     //     } else {
     //         this.operatorStack.push('/');
     //         this.lastInput = '/';

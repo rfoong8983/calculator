@@ -6,24 +6,18 @@ class Button extends React.Component {
         this.val = props.val;
         this.model = props.model;
         this.updateCurrentDisplay = props.updateCurrentDisplay;
-        this.operations = {
-            '+': this.model.performOp('+'),
-            '-': this.model.performOp('-'),
-            '*': this.model.performOp('*'),
-            '/': this.model.performOp('/'),
-            '=': this.model.evalStack
-        };
 
         this.handleClick = this.handleClick.bind(this);
     }
 
     handleClick() {
         const buttonVal = this.val;
+        const model = this.model;
 
-        if (buttonVal in this.operations) {
-            this.operations[buttonVal]();
+        if (model.isOperation(buttonVal)) {
+            model.performOp(buttonVal);
         } else {
-            this.model.addToStack(parseInt(buttonVal));
+            model.addToStack(parseInt(buttonVal));
         }
         
         this.updateCurrentDisplay();
