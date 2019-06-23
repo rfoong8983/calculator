@@ -11,6 +11,100 @@ class CalculatorModel {
         this.divide = this.divide.bind(this);
     }
 
+    addToStack(val) {
+        this.stack.push(val);
+        this.currentDisplay = val;
+        this.lastInput = val;
+    }
+
+    // remember to check operation VS input in certain cases
+
+    add() {
+        if (this.lastOperationIsNotSameAs('+')) {
+            this.operatorStack.pop();
+            this.operatorStack.push('+');
+        } else {
+            this.evalStack();
+            this.operatorStack.push('+');
+            this.lastInput = '+';
+        }
+    }
+
+    subtract() {
+        if (this.lastOperationIsNotSameAs('-')) {
+            this.operatorStack.pop();
+            this.operatorStack.push('-');
+        } else {
+            this.evalStack();
+            this.operatorStack.push('-');
+            this.lastInput = '-';
+        }
+
+
+    }
+
+    multiply() {
+        if (this.lastOperationIsNotSameAs('*')) {
+            this.operatorStack.pop();
+            this.operatorStack.push('*');
+        } else if (this.isMultOrDiv()) {
+            this.equals();
+        } else {
+            this.operatorStack.push('*');
+            this.lastInput = '*';
+        }
+
+    }
+
+    divide() {
+        if (this.lastOperationIsNotSameAs('/')) {
+            this.operatorStack.pop();
+            this.operatorStack.push('/');
+        } else if (this.isMultOrDiv()) {
+            this.equals();
+        } else {
+            this.operatorStack.push('/');
+            this.lastInput = '/';
+        }
+
+    }
+
+    equals() {
+        const op = this.operatorStack.pop();
+        let l;
+        let r;
+        let result;
+
+        r = this.stack.pop();
+        l = this.stack.pop();
+
+        switch(op) {
+            case '+':
+                result = l + r;
+                break;
+            case '-':
+                result = l - r;
+                break;
+            case '*':
+                result = l * r;
+                break;
+            case '/':
+                result = l / r;
+                break;
+        }
+
+        this.stack.push(result);
+        this.currentDisplay = result;
+    }
+
+    // helper functions
+
+    evalStack() {
+        while (this.stack.length && this.operatorStack.length) {
+            this.equals();
+        }
+    }
+
     getLastOperator() {
         if (this.operatorStack.length === 0) {
             return null;
@@ -22,12 +116,6 @@ class CalculatorModel {
     isMultOrDiv() {
         const lastOp = this.getLastOperator();
         return lastOp === '*' || lastOp === '/';
-    }
-
-    evalStack() {
-        while (this.stack.length && this.operatorStack.length) {
-            this.equals();
-        }
     }
 
     isOperation(val) {
@@ -53,105 +141,7 @@ class CalculatorModel {
     }
 
     lastOperationIsNotSameAs(val) {
-        const ops = {
-            '+': true,
-            '-': true,
-            '*': true,
-            '/': true
-        };
-
-        return this.lastInput !== val && this.lastInput in ops;
-    }
-
-    lastOperationIsSameAs(val) {
-        const lastOp = this.getLastOperator();
-
-        return lastOp === val;
-    } // needs to be last operation is same as; NOT last input is same as
-
-    lastInputIsSameAs(val) {
-        return this.lastInput !== val;
-    }
-
-    add() {
-        if (this.lastOperationIsNotSameAs('+')) {
-            this.operatorStack.pop();
-            this.operatorStack.push('+');
-        } else if (this.isMultOrDiv() || this.lastOperationIsSameAs('+') || this.lastOperationIsSameAs('-')) {
-            this.evalStack();
-        } else {
-            this.operatorStack.push('+');
-            this.lastInput = '+';
-        }
-    }
-
-    subtract() {
-        if (this.lastOperationIsNotSameAs('-')) {
-            this.operatorStack.pop();
-            this.operatorStack.push('-');
-        } else if (this.isMultOrDiv() || this.lastOperationIsSameAs('+') || this.lastOperationIsSameAs('-')) {
-            this.evalStack();
-        } else {
-            this.operatorStack.push('-');
-            this.lastInput = '-';
-        }
-
-        
-    }
-
-    multiply() {
-        if (this.lastOperationIsNotSameAs('*')) {
-            this.operatorStack.pop();
-            this.operatorStack.push('*');
-        } else if (this.isMultOrDiv() || this.lastOperationIsSameAs('*')) {
-            this.equals();
-        } else {
-            this.operatorStack.push('*');
-            this.lastInput = '*';
-        }
-        
-    }
-
-    divide() {
-        if (this.lastOperationIsNotSameAs('/')) {
-            this.operatorStack.pop();
-            this.operatorStack.push('/');
-        } else if (this.isMultOrDiv() || this.lastOperationIsSameAs('/')) {
-            this.equals();
-        } else {
-            this.operatorStack.push('/');
-            this.lastInput = '/';
-        }
-        
-    }
-
-    addToStack(val) {
-        this.stack.push(val);
-        this.currentDisplay = val;
-        this.lastInput = val;
-    }
-
-    equals() {
-        const op = this.operatorStack.pop();
-        let l;
-        let r;
-        let result;
-
-        r = this.stack.pop();
-        l = this.stack.pop();
-
-        if (op === '+') {
-            result = l + r;
-        } else if (op === '-') {
-            result = l - r;
-        } else if (op === '*') {
-            result = l * r;
-        } else if (op === '/') {
-            result = l / r;
-        }
-
-        this.stack.push(result);
-        this.currentDisplay = result;
+        return this.lastInput !== val && this.lastInputIsOperation();
     }
 }
 
