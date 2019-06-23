@@ -5,10 +5,11 @@ class CalculatorModel {
         this.currentDisplay = 0;
         this.lastInput = undefined;
 
-        this.add = this.add.bind(this);
-        this.subtract = this.subtract.bind(this);
-        this.multiply = this.multiply.bind(this);
-        this.divide = this.divide.bind(this);
+        this.performOp = this.performOp.bind(this);
+        // this.add = this.add.bind(this);
+        // this.subtract = this.subtract.bind(this);
+        // this.multiply = this.multiply.bind(this);
+        // this.divide = this.divide.bind(this);
     }
 
     addToStack(val) {
@@ -17,56 +18,37 @@ class CalculatorModel {
         this.lastInput = val;
     }
 
-    // remember to check operation VS input in certain cases
+    performOp(op) {
 
-    add() {
-        if (this.lastOperationIsNotSameAs('+')) {
-            this.operatorStack.pop();
-            this.operatorStack.push('+');
-        } else {
-            this.evalStack();
-            this.operatorStack.push('+');
-            this.lastInput = '+';
+        switch(op) {
+
+            case '+':
+            case '-':
+                if (this.lastOperationIsNotSameAs(op)) {
+                    this.operatorStack.pop();
+                    this.operatorStack.push(op);
+                } else {
+                    this.evalStack();
+                    this.operatorStack.push(op);
+                    this.lastInput = op;
+                }
+
+                break;
+
+            case '*':
+            case '/':
+                if (this.lastOperationIsNotSameAs(op)) {
+                    this.operatorStack.pop();
+                    this.operatorStack.push(op);
+                } else if (this.isMultOrDiv()) {
+                    this.equals();
+                } else {
+                    this.operatorStack.push(op);
+                    this.lastInput = op;
+                }
+
+                break;
         }
-    }
-
-    subtract() {
-        if (this.lastOperationIsNotSameAs('-')) {
-            this.operatorStack.pop();
-            this.operatorStack.push('-');
-        } else {
-            this.evalStack();
-            this.operatorStack.push('-');
-            this.lastInput = '-';
-        }
-
-
-    }
-
-    multiply() {
-        if (this.lastOperationIsNotSameAs('*')) {
-            this.operatorStack.pop();
-            this.operatorStack.push('*');
-        } else if (this.isMultOrDiv()) {
-            this.equals();
-        } else {
-            this.operatorStack.push('*');
-            this.lastInput = '*';
-        }
-
-    }
-
-    divide() {
-        if (this.lastOperationIsNotSameAs('/')) {
-            this.operatorStack.pop();
-            this.operatorStack.push('/');
-        } else if (this.isMultOrDiv()) {
-            this.equals();
-        } else {
-            this.operatorStack.push('/');
-            this.lastInput = '/';
-        }
-
     }
 
     equals() {
@@ -146,3 +128,56 @@ class CalculatorModel {
 }
 
 export default CalculatorModel;
+
+
+    // remember to check operation VS input in certain cases
+
+    // add() {
+    //     if (this.lastOperationIsNotSameAs('+')) {
+    //         this.operatorStack.pop();
+    //         this.operatorStack.push('+');
+    //     } else {
+    //         this.evalStack();
+    //         this.operatorStack.push('+');
+    //         this.lastInput = '+';
+    //     }
+    // }
+
+    // subtract() {
+    //     if (this.lastOperationIsNotSameAs('-')) {
+    //         this.operatorStack.pop();
+    //         this.operatorStack.push('-');
+    //     } else {
+    //         this.evalStack();
+    //         this.operatorStack.push('-');
+    //         this.lastInput = '-';
+    //     }
+
+
+    // }
+
+    // multiply() {
+    //     if (this.lastOperationIsNotSameAs('*')) {
+    //         this.operatorStack.pop();
+    //         this.operatorStack.push('*');
+    //     } else if (this.isMultOrDiv()) {
+    //         this.equals();
+    //     } else {
+    //         this.operatorStack.push('*');
+    //         this.lastInput = '*';
+    //     }
+
+    // }
+
+    // divide() {
+    //     if (this.lastOperationIsNotSameAs('/')) {
+    //         this.operatorStack.pop();
+    //         this.operatorStack.push('/');
+    //     } else if (this.isMultOrDiv()) {
+    //         this.equals();
+    //     } else {
+    //         this.operatorStack.push('/');
+    //         this.lastInput = '/';
+    //     }
+
+    // }

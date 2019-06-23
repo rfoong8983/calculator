@@ -7,10 +7,10 @@ class Button extends React.Component {
         this.model = props.model;
         this.updateCurrentDisplay = props.updateCurrentDisplay;
         this.operations = {
-            '+': this.model.add,
-            '-': this.model.subtract,
-            '*': this.model.multiply,
-            '/': this.model.divide,
+            '+': this.model.performOp('+'),
+            '-': this.model.performOp('-'),
+            '*': this.model.performOp('*'),
+            '/': this.model.performOp('/'),
             '=': this.model.evalStack
         };
 
@@ -18,10 +18,12 @@ class Button extends React.Component {
     }
 
     handleClick() {
-        if (this.val in this.operations) {
-            this.operations[this.val]();
+        const buttonVal = this.val;
+
+        if (buttonVal in this.operations) {
+            this.operations[buttonVal]();
         } else {
-            this.model.addToStack(parseInt(this.val));
+            this.model.addToStack(parseInt(buttonVal));
         }
         
         this.updateCurrentDisplay();
