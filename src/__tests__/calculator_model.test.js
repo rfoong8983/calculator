@@ -19,7 +19,7 @@ describe('adds values to a stack', () => {
         test('it updates current display', () => {
             const calc = new CalculatorModel();
             calc.addToStack(1);
-            expect(calc.currentDisplay).toEqual(1);
+            expect(calc.currentDisplay).toEqual('1');
         });
     });
 
@@ -57,7 +57,7 @@ describe('adds values to a stack', () => {
             calc.addToStack(1);
             calc.performOp('+');
             calc.addToStack(2);
-            expect(calc.currentDisplay).toEqual(2);
+            expect(calc.currentDisplay).toEqual('2');
         });
 
         describe('if there is an add operation on the operator stack', () => {
@@ -68,7 +68,7 @@ describe('adds values to a stack', () => {
                 calc.performOp('+');
                 calc.addToStack(2);
                 calc.performOp('+');
-                expect(calc.currentDisplay).toEqual(3);
+                expect(calc.currentDisplay).toEqual('3');
             });
 
             test('subtract will evaluate the sum of the last two vals on the stack', () => {
@@ -77,7 +77,7 @@ describe('adds values to a stack', () => {
                 calc.performOp('+');
                 calc.addToStack(2);
                 calc.performOp('-');
-                expect(calc.currentDisplay).toEqual(3);
+                expect(calc.currentDisplay).toEqual('3');
             });
 
             test('multiply will display the last input', () => {
@@ -86,7 +86,7 @@ describe('adds values to a stack', () => {
                 calc.performOp('+');
                 calc.addToStack(2);
                 calc.performOp('*');
-                expect(calc.currentDisplay).toEqual(2);
+                expect(calc.currentDisplay).toEqual('2');
             });
 
             test('divide will evaluate the sum of the last two vals on the stack', () => {
@@ -95,7 +95,7 @@ describe('adds values to a stack', () => {
                 calc.performOp('+');
                 calc.addToStack(2);
                 calc.performOp('/');
-                expect(calc.currentDisplay).toEqual(2);
+                expect(calc.currentDisplay).toEqual('2');
             });
 
             test('add repeatedly pressed should only evaluate the last two vals once', () => {
@@ -107,7 +107,7 @@ describe('adds values to a stack', () => {
                 calc.performOp('+');
                 calc.performOp('+');
                 calc.performOp('+');
-                expect(calc.currentDisplay).toEqual(3);
+                expect(calc.currentDisplay).toEqual('3');
             });
             test('subtract repeatedly pressed should only evaluate the last two vals once', () => {
                 const calc = new CalculatorModel();
@@ -118,7 +118,7 @@ describe('adds values to a stack', () => {
                 calc.performOp('*');
                 calc.performOp('*');
                 calc.performOp('-');
-                expect(calc.currentDisplay).toEqual(3);
+                expect(calc.currentDisplay).toEqual('3');
             });
             test('multiply should not cause an error', () => {
                 const calc = new CalculatorModel();
@@ -129,7 +129,7 @@ describe('adds values to a stack', () => {
                 calc.performOp('*');
                 calc.performOp('*');
                 calc.performOp('*');
-                expect(calc.currentDisplay).toEqual(2);
+                expect(calc.currentDisplay).toEqual('2');
             });
             test('divide should not cause an error', () => {
                 const calc = new CalculatorModel();
@@ -140,7 +140,7 @@ describe('adds values to a stack', () => {
                 calc.performOp('/');
                 calc.performOp('/');
                 calc.performOp('/');
-                expect(calc.currentDisplay).toEqual(2);
+                expect(calc.currentDisplay).toEqual('2');
             });
         });
 
@@ -152,7 +152,7 @@ describe('adds values to a stack', () => {
                 calc.performOp('-');
                 calc.addToStack(2);
                 calc.performOp('+');
-                expect(calc.currentDisplay).toEqual(-1);
+                expect(calc.currentDisplay).toEqual('-1');
             });
 
             test('subtract will evaluate the sum of the last two vals on the stack', () => {
@@ -161,7 +161,7 @@ describe('adds values to a stack', () => {
                 calc.performOp('-');
                 calc.addToStack(2);
                 calc.performOp('-');
-                expect(calc.currentDisplay).toEqual(-1);
+                expect(calc.currentDisplay).toEqual('-1');
             });
 
             test('multiply will display the last input', () => {
@@ -170,7 +170,7 @@ describe('adds values to a stack', () => {
                 calc.performOp('-');
                 calc.addToStack(2);
                 calc.performOp('*');
-                expect(calc.currentDisplay).toEqual(2);
+                expect(calc.currentDisplay).toEqual('2');
             });
 
             test('divide will evaluate the sum of the last two vals on the stack', () => {
@@ -179,7 +179,7 @@ describe('adds values to a stack', () => {
                 calc.performOp('-');
                 calc.addToStack(2);
                 calc.performOp('/');
-                expect(calc.currentDisplay).toEqual(2);
+                expect(calc.currentDisplay).toEqual('2');
             });
 
             test('add repeatedly pressed should only evaluate the last two vals once', () => {
@@ -191,7 +191,7 @@ describe('adds values to a stack', () => {
                 calc.performOp('+');
                 calc.performOp('+');
                 calc.performOp('+');
-                expect(calc.currentDisplay).toEqual(-1);
+                expect(calc.currentDisplay).toEqual('-1');
             });
             test('subtract repeatedly pressed should only evaluate the last two vals once', () => {
                 const calc = new CalculatorModel();
@@ -202,7 +202,7 @@ describe('adds values to a stack', () => {
                 calc.performOp('*');
                 calc.performOp('*');
                 calc.performOp('-');
-                expect(calc.currentDisplay).toEqual(-1);
+                expect(calc.currentDisplay).toEqual('-1');
             });
             test('multiply should not cause an error', () => {
                 const calc = new CalculatorModel();
@@ -213,7 +213,7 @@ describe('adds values to a stack', () => {
                 calc.performOp('*');
                 calc.performOp('*');
                 calc.performOp('*');
-                expect(calc.currentDisplay).toEqual(2);
+                expect(calc.currentDisplay).toEqual('2');
             });
             test('divide should not cause an error', () => {
                 const calc = new CalculatorModel();
@@ -224,7 +224,7 @@ describe('adds values to a stack', () => {
                 calc.performOp('/');
                 calc.performOp('/');
                 calc.performOp('/');
-                expect(calc.currentDisplay).toEqual(2);
+                expect(calc.currentDisplay).toEqual('2');
             });
         });
 
@@ -238,7 +238,7 @@ describe('adds values to a stack', () => {
                 calc.performOp('*');
                 calc.addToStack(3);
                 calc.performOp('+');
-                expect(calc.currentDisplay).toEqual(7);
+                expect(calc.currentDisplay).toEqual('7');
             });
 
             test('subtract will evaluate the rest of the stack', () => {
@@ -249,7 +249,7 @@ describe('adds values to a stack', () => {
                 calc.performOp('*');
                 calc.addToStack(3);
                 calc.performOp('-');
-                expect(calc.currentDisplay).toEqual(-5);
+                expect(calc.currentDisplay).toEqual('-5');
             });
 
             test('multiply will evaluate the last two vals on the stack', () => {
@@ -258,7 +258,7 @@ describe('adds values to a stack', () => {
                 calc.performOp('*');
                 calc.addToStack(2);
                 calc.performOp('*');
-                expect(calc.currentDisplay).toEqual(6);
+                expect(calc.currentDisplay).toEqual('6');
             });
 
             test('divide will evaluate the last two vals on the stack', () => {
@@ -267,7 +267,7 @@ describe('adds values to a stack', () => {
                 calc.performOp('*');
                 calc.addToStack(2);
                 calc.performOp('/');
-                expect(calc.currentDisplay).toEqual(6);
+                expect(calc.currentDisplay).toEqual('6');
             });
 
             test('add repeatedly pressed should only evaluate the last two vals once', () => {
@@ -279,7 +279,7 @@ describe('adds values to a stack', () => {
                 calc.performOp('+');
                 calc.performOp('+');
                 calc.performOp('+');
-                expect(calc.currentDisplay).toEqual(6);
+                expect(calc.currentDisplay).toEqual('6');
             });
             test('subtract repeatedly pressed should only evaluate the last two vals once', () => {
                 const calc = new CalculatorModel();
@@ -290,7 +290,7 @@ describe('adds values to a stack', () => {
                 calc.performOp('*');
                 calc.performOp('*');
                 calc.performOp('-');
-                expect(calc.currentDisplay).toEqual(6);
+                expect(calc.currentDisplay).toEqual('6');
             });
             test('multiply should not cause an error', () => {
                 const calc = new CalculatorModel();
@@ -301,7 +301,7 @@ describe('adds values to a stack', () => {
                 calc.performOp('*');
                 calc.performOp('*');
                 calc.performOp('*');
-                expect(calc.currentDisplay).toEqual(2);
+                expect(calc.currentDisplay).toEqual('2');
             });
             test('divide should not cause an error', () => {
                 const calc = new CalculatorModel();
@@ -312,7 +312,7 @@ describe('adds values to a stack', () => {
                 calc.performOp('/');
                 calc.performOp('/');
                 calc.performOp('/');
-                expect(calc.currentDisplay).toEqual(2);
+                expect(calc.currentDisplay).toEqual('2');
             });
         });
 
@@ -324,7 +324,7 @@ describe('adds values to a stack', () => {
                 calc.performOp('/');
                 calc.addToStack(2);
                 calc.performOp('+');
-                expect(calc.currentDisplay).toEqual(0.5);
+                expect(calc.currentDisplay).toEqual('0.5');
             });
 
             test('subtract will evaluate the last operation', () => {
@@ -333,7 +333,7 @@ describe('adds values to a stack', () => {
                 calc.performOp('/');
                 calc.addToStack(2);
                 calc.performOp('-');
-                expect(calc.currentDisplay).toEqual(0.5);
+                expect(calc.currentDisplay).toEqual('0.5');
             });
 
             test('multiply will evaluate the the last operation', () => {
@@ -342,7 +342,7 @@ describe('adds values to a stack', () => {
                 calc.performOp('/');
                 calc.addToStack(2);
                 calc.performOp('*');
-                expect(calc.currentDisplay).toEqual(0.5);
+                expect(calc.currentDisplay).toEqual('0.5');
             });
 
             test('divide will evaluate the last operation', () => {
@@ -351,7 +351,7 @@ describe('adds values to a stack', () => {
                 calc.performOp('/');
                 calc.addToStack(2);
                 calc.performOp('/');
-                expect(calc.currentDisplay).toEqual(0.5);
+                expect(calc.currentDisplay).toEqual('0.5');
             });
 
             test('(long decimals) add will evaluate the last operation', () => {
@@ -360,7 +360,7 @@ describe('adds values to a stack', () => {
                 calc.performOp('/');
                 calc.addToStack(3);
                 calc.performOp('+');
-                expect(calc.currentDisplay).toEqual(0.6666666666666666);
+                expect(calc.currentDisplay).toEqual('0.6666666666666666');
             });
 
             test('(long decimals) subtract will evaluate the last operation', () => {
@@ -369,7 +369,7 @@ describe('adds values to a stack', () => {
                 calc.performOp('/');
                 calc.addToStack(3);
                 calc.performOp('-');
-                expect(calc.currentDisplay).toEqual(0.6666666666666666);
+                expect(calc.currentDisplay).toEqual('0.6666666666666666');
             });
 
             test('(long decimals) multiply will evaluate the the last operation', () => {
@@ -378,7 +378,7 @@ describe('adds values to a stack', () => {
                 calc.performOp('/');
                 calc.addToStack(3);
                 calc.performOp('*');
-                expect(calc.currentDisplay).toEqual(0.6666666666666666);
+                expect(calc.currentDisplay).toEqual('0.6666666666666666');
             });
 
             test('(long decimals) divide will evaluate the last operation', () => {
@@ -387,7 +387,7 @@ describe('adds values to a stack', () => {
                 calc.performOp('/');
                 calc.addToStack(3);
                 calc.performOp('/');
-                expect(calc.currentDisplay).toEqual(0.6666666666666666);
+                expect(calc.currentDisplay).toEqual('0.6666666666666666');
             });
 
             test('add repeatedly pressed should only evaluate the last two vals once', () => {
@@ -399,7 +399,7 @@ describe('adds values to a stack', () => {
                 calc.performOp('+');
                 calc.performOp('+');
                 calc.performOp('+');
-                expect(calc.currentDisplay).toEqual(0.5);
+                expect(calc.currentDisplay).toEqual('0.5');
             });
             test('subtract repeatedly pressed should only evaluate the last two vals once', () => {
                 const calc = new CalculatorModel();
@@ -410,7 +410,7 @@ describe('adds values to a stack', () => {
                 calc.performOp('*');
                 calc.performOp('*');
                 calc.performOp('-');
-                expect(calc.currentDisplay).toEqual(0.5);
+                expect(calc.currentDisplay).toEqual('0.5');
             });
             test('multiply should not cause an error', () => {
                 const calc = new CalculatorModel();
@@ -421,7 +421,7 @@ describe('adds values to a stack', () => {
                 calc.performOp('*');
                 calc.performOp('*');
                 calc.performOp('*');
-                expect(calc.currentDisplay).toEqual(0.5);
+                expect(calc.currentDisplay).toEqual('0.5');
             });
             test('divide should not cause an error', () => {
                 const calc = new CalculatorModel();
@@ -432,7 +432,7 @@ describe('adds values to a stack', () => {
                 calc.performOp('/');
                 calc.performOp('/');
                 calc.performOp('/');
-                expect(calc.currentDisplay).toEqual(0.5);
+                expect(calc.currentDisplay).toEqual('0.5');
             });
 
             test('(long decimals) add repeatedly pressed should only evaluate the last two vals once', () => {
@@ -444,7 +444,7 @@ describe('adds values to a stack', () => {
                 calc.performOp('+');
                 calc.performOp('+');
                 calc.performOp('+');
-                expect(calc.currentDisplay).toEqual(0.6666666666666666);
+                expect(calc.currentDisplay).toEqual('0.6666666666666666');
             });
             test('(long decimals) subtract repeatedly pressed should only evaluate the last two vals once', () => {
                 const calc = new CalculatorModel();
@@ -455,7 +455,7 @@ describe('adds values to a stack', () => {
                 calc.performOp('*');
                 calc.performOp('*');
                 calc.performOp('-');
-                expect(calc.currentDisplay).toEqual(0.6666666666666666);
+                expect(calc.currentDisplay).toEqual('0.6666666666666666');
             });
             test('(long decimals) multiply should not cause an error', () => {
                 const calc = new CalculatorModel();
@@ -466,7 +466,7 @@ describe('adds values to a stack', () => {
                 calc.performOp('*');
                 calc.performOp('*');
                 calc.performOp('*');
-                expect(calc.currentDisplay).toEqual(0.6666666666666666);
+                expect(calc.currentDisplay).toEqual('0.6666666666666666');
             });
             test('(long decimals) divide should not cause an error', () => {
                 const calc = new CalculatorModel();
@@ -477,7 +477,7 @@ describe('adds values to a stack', () => {
                 calc.performOp('/');
                 calc.performOp('/');
                 calc.performOp('/');
-                expect(calc.currentDisplay).toEqual(0.6666666666666666);
+                expect(calc.currentDisplay).toEqual('0.6666666666666666');
             });
         });
     });
@@ -491,11 +491,45 @@ describe('handles invalid equations', () => {
         calc.performOp('-');
         calc.addToStack(3);
         calc.performOp('=');
-        expect(calc.currentDisplay).toEqual(NaN);
+        expect(calc.currentDisplay).toEqual('NaN');
     });
 });
 
-describe('if the value is equals', () => {
+describe('if the button value is AC', () => {
+
+    test('it clears both stacks', () => {
+        const calc = new CalculatorModel();
+        calc.addToStack(2);
+        calc.performOp('+');
+        calc.addToStack(2);
+        calc.performOp('-');
+        calc.addToStack(3);
+        calc.performOp('=');
+        calc.clearAll();
+        expect(calc.stack).toHaveLength(0);
+        expect(calc.operatorStack).toHaveLength(0);
+        expect(calc.currentDisplay).toEqual('0');
+    });
+
+    test('it clears both stacks', () => {
+        const calc = new CalculatorModel();
+        calc.performOp('/');
+        calc.addToStack(2);
+        calc.performOp('*');
+        calc.addToStack(3);
+        calc.performOp('=');
+        calc.clearAll();
+        expect(calc.stack).toHaveLength(0);
+        expect(calc.operatorStack).toHaveLength(0);
+        expect(calc.currentDisplay).toEqual('0');
+    });
+});
+
+describe('if the button value is a decimal', () => {
+
+});
+
+describe('if the button value is equals', () => {
 
     describe ('when there are single operations of the same type (e.g., add & subtr or mult & div)', () => {
 
@@ -509,7 +543,7 @@ describe('if the value is equals', () => {
             calc.addToStack(3);
             calc.performOp('=');
             expect(calc.stack).toHaveLength(2);
-            expect(calc.currentDisplay).toEqual(1);
+            expect(calc.currentDisplay).toEqual('1');
         });
 
         test('it evaluates the entire stack and the number stack only contains the result', () => {
@@ -522,7 +556,7 @@ describe('if the value is equals', () => {
             calc.addToStack(3);
             calc.performOp('=');
             expect(calc.stack).toHaveLength(2);
-            expect(calc.currentDisplay).toEqual(12);
+            expect(calc.currentDisplay).toEqual('12');
         });
 
         test('it evaluates the entire stack and the number stack only contains the result', () => {
@@ -535,7 +569,7 @@ describe('if the value is equals', () => {
             calc.addToStack(4);
             calc.performOp('=');
             expect(calc.stack).toHaveLength(2);
-            expect(calc.currentDisplay).toEqual(2.6666666666666665);
+            expect(calc.currentDisplay).toEqual('2.6666666666666665');
         });
 
         test('it evaluates the entire stack and empties the operator stack', () => {
@@ -548,7 +582,7 @@ describe('if the value is equals', () => {
             calc.addToStack(2);
             calc.performOp('=');
             expect(calc.stack).toHaveLength(2);
-            expect(calc.currentDisplay).toEqual(1.3333333333333333);
+            expect(calc.currentDisplay).toEqual('1.3333333333333333');
         });
         
     });
@@ -571,7 +605,7 @@ describe('if the value is equals', () => {
             calc.performOp('=');
             // console.log(calc.stack, calc.operatorStack, calc.currentDisplay);
             expect(calc.stack).toHaveLength(2);
-            expect(calc.currentDisplay).toEqual(7);
+            expect(calc.currentDisplay).toEqual('7');
         });
 
         test('it evaluates the entire stack (add/subtr) and the number stack only contains the result', () => {
@@ -584,7 +618,7 @@ describe('if the value is equals', () => {
             calc.addToStack(3);
             calc.performOp('=');
             expect(calc.stack).toHaveLength(2);
-            expect(calc.currentDisplay).toEqual(0.33333333333333337);
+            expect(calc.currentDisplay).toEqual('0.33333333333333337');
         });
 
         test('it evaluates the entire stack (mult/div) and the number stack only contains the result', () => {
@@ -597,7 +631,7 @@ describe('if the value is equals', () => {
             calc.addToStack(3);
             calc.performOp('=');
             expect(calc.stack).toHaveLength(2);
-            expect(calc.currentDisplay).toEqual(-5);
+            expect(calc.currentDisplay).toEqual('-5');
         });
 
         test('it evaluates the entire stack and correctly handles an operator being pressed first', () => {
@@ -609,7 +643,7 @@ describe('if the value is equals', () => {
             calc.addToStack(3);
             calc.performOp('=');
             expect(calc.stack).toHaveLength(1);
-            expect(calc.currentDisplay).toEqual(6);
+            expect(calc.currentDisplay).toEqual('6');
         });
 
         test('it evaluates the entire stack and correctly handles an operator being pressed first', () => {
@@ -621,7 +655,7 @@ describe('if the value is equals', () => {
             calc.addToStack(3);
             calc.performOp('=');
             expect(calc.stack).toHaveLength(1);
-            expect(calc.currentDisplay).toEqual(0);
+            expect(calc.currentDisplay).toEqual('0');
         });
 
         test('it evaluates the entire stack and correctly handles an operator being pressed first', () => {
@@ -632,7 +666,7 @@ describe('if the value is equals', () => {
             calc.performOp('*');
             calc.addToStack(3);
             calc.performOp('=');
-            expect(calc.currentDisplay).toEqual(0);
+            expect(calc.currentDisplay).toEqual('0');
         });
     });
 
@@ -647,7 +681,7 @@ describe('if the value is equals', () => {
             calc.addToStack(1);
             expect(calc.stack).toHaveLength(2);
             expect(calc.operatorStack).toHaveLength(0);
-            expect(calc.currentDisplay).toEqual(1);
+            expect(calc.currentDisplay).toEqual('1');
         });
     });
 
@@ -659,11 +693,16 @@ describe('if the value is equals', () => {
             calc.performOp('*');
             calc.addToStack(3);
             calc.performOp('=');
+            console.log(calc.stack, calc.operatorStack, calc.currentDisplay);
             calc.performOp('*');
+            console.log(calc.stack, calc.operatorStack, calc.currentDisplay);
             calc.addToStack(4);
+            console.log(calc.stack, calc.operatorStack, calc.currentDisplay);
             calc.performOp('=');
+            calc.performOp('=');
+            console.log(calc.stack, calc.operatorStack, calc.currentDisplay);
             expect(calc.stack).toHaveLength(1);
-            expect(calc.currentDisplay).toEqual(24);
+            expect(calc.currentDisplay).toEqual('24');
         });
     });
 });

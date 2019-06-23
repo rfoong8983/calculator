@@ -10,7 +10,7 @@ class Calculator extends React.Component {
             currentDisplay: 0
         };
 
-        this.buttons = ['1', '3', '+', '-', '*', '/', '='];
+        this.buttons = ['0', '1', '3', '+', '-', '*', '/', '=', 'AC'];
 
         this.displayButtons = this.displayButtons.bind(this);
         this.updateCurrentDisplay = this.updateCurrentDisplay.bind(this);

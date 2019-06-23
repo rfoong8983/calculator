@@ -16,6 +16,12 @@ class Button extends React.Component {
 
         if (model.isOperation(buttonVal)) {
             model.performOp(buttonVal);
+
+        } else if (model.isUtility(buttonVal)) {
+            model.clearAll(buttonVal);
+
+        } else if (model.isDecimal(buttonVal)) {
+            
         } else {
             model.addToStack(parseInt(buttonVal));
         }

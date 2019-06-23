@@ -2,17 +2,41 @@ class CalculatorModel {
     constructor() {
         this.stack = [0];
         this.operatorStack = [];
-        this.currentDisplay = 0;
+        this.currentDisplay = '0';
         this.lastInput = undefined;
+        this.ops = {
+            '+': true,
+            '-': true,
+            '*': true,
+            '/': true,
+            '=': true
+        };
+        this.utilities = {
+            'AC': true
+        };
 
         this.performOp = this.performOp.bind(this);
+        this.clearAll = this.clearAll.bind(this);
+    }
+
+    appendToLastNumber() {
+        const lastNumOnStack = this.stack[this.stack.length - 1]
+        // if (!this.lastInputIsOperation()) { .push('.'); }
+        // this.currentDisplay.push('.');
     }
 
     addToStack(val) {
         if (this.lastInput === '=') this.stack = [0];
         this.stack.push(val);
-        this.currentDisplay = val;
+        this.currentDisplay = val.toString();
         this.lastInput = val;
+    }
+
+    clearAll() {
+        this.stack = [];
+        this.operatorStack = [];
+        this.currentDisplay = '0';
+        this.lastInput = undefined;
     }
 
     performOp(op) {
@@ -36,6 +60,7 @@ class CalculatorModel {
                 if (this.lastInputIsOperation()) {
                     this.operatorStack.pop();
                     this.operatorStack.push(op);
+                    this.lastInput = op;
                 } else if (this.lastOpWasMultOrDiv()) {
                     this.evalLastTwoNums();
 
@@ -51,6 +76,9 @@ class CalculatorModel {
                 break;
 
             case '=':
+                if (this.lastInputIsOperation()) {
+                    break;
+                }
                 this.evalStack();
                 this.lastInput = '=';
                 break;
@@ -86,7 +114,7 @@ class CalculatorModel {
         }
 
         this.addToStack(result);
-        this.currentDisplay = result;
+        this.currentDisplay = result.toString();
     }
 
     // helper functions
@@ -110,44 +138,16 @@ class CalculatorModel {
         return lastOp === '*' || lastOp === '/';
     }
 
-    isOperation(val) {
-        const ops = {
-            '+': true,
-            '-': true,
-            '*': true,
-            '/': true
-        };
-
-        return val in ops;
-    }
-
-    lastInputIsOperation() {
-        const ops = {
-            '+': true,
-            '-': true,
-            '*': true,
-            '/': true
-        };
-
-        return this.lastInput in ops;
-    }
-
     lastOpIsOperation() {
         const lastOp = this.getLastOperator();
-
-        const ops = {
-            '+': true,
-            '-': true,
-            '*': true,
-            '/': true
-        };
-
-        return lastOp in ops;
+        return lastOp in this.ops;
     }
 
-    lastOperationIsNotSameAs(val) {
-        return this.lastInput !== val && this.lastInputIsOperation();
-    }
+    isDecimal(val) { return val === '.'; }
+    isUtility(val) { return val in this.utilities; }
+    isOperation(val) { return val in this.ops; }
+    lastInputIsOperation() { return this.lastInput in this.ops; }
+    lastOperationIsNotSameAs(val) { return this.lastInput !== val && this.lastInputIsOperation(); }
 }
 
 export default CalculatorModel;
