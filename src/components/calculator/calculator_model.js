@@ -1,4 +1,15 @@
 class CalculatorModel {
+    /*
+        Don't think a class is necessary here
+        a lot of modern JS theory favors composition over inheritance
+        https://medium.com/javascript-scene/master-the-javascript-interview-what-s-the-difference-between-class-prototypal-inheritance-e4cd0a7562e9
+
+        So basically I would get rid of this class abstraction
+        and actually embed these functions into the <Calculator /> itself
+        Creating a separate class to instantiate isn't necessary
+        when <Calculator /> itself is already a class that will be instantiated
+        which has it's own `this.state` that you can use to house a lot the state you've defined below
+    */
     constructor() {
         this.stack = [0];
         this.numberBuilder = '';
@@ -184,6 +195,13 @@ class CalculatorModel {
 
     isDecimal(val) { return val === '.'; }
     isUtility(val) { return val in this.utilities; }
+    /*
+        The `in` operator works fine here, but it also searches for the specified property in the prototype chain
+        which may lead to unintended consequences
+        here I think it's sufficient to replace line 46 with
+        `return this.utilities[val]` which will either be `true` or `undefined`
+        Same goes for the other `in` usages
+    */
     isOperation(val) { return val in this.ops; }
     lastInputIsOperation() { return this.lastInput in this.ops; }
     lastOperationIsNotSameAs(val) { return this.lastInput !== val && this.lastInputIsOperation(); }

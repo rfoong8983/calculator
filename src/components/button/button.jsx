@@ -6,7 +6,6 @@ class Button extends React.Component {
         this.val = props.val;
         this.model = props.model;
         this.updateCurrentDisplay = props.updateCurrentDisplay;
-
         this.handleClick = this.handleClick.bind(this);
     }
 
@@ -16,6 +15,14 @@ class Button extends React.Component {
 
         if (model.isOperation(buttonVal)) {
             model.performOp(buttonVal);
+            /*
+                It feels like, minimally, there are actually two types of buttons, perhaps three
+                <Number /> and <Operator /> (<Utility />? I think this is pretty similar to operator, not 100% sure though).
+                These can be implemented as wrappers around a more generic <Button />
+                Otherwise you get this kind of extra branching logic that I think is better avoided in this case
+                Because there are multiple concrete use cases for the two components I've defined above.
+                i.e. 1 through 9 and the five(six?) operators.
+            */
         } else if (model.isUtility(buttonVal)) {
             model.clearAll(buttonVal);
         } else {
