@@ -1,6 +1,7 @@
 class CalculatorModel {
     constructor() {
         this.stack = [0];
+        this.numberBuilder = '';
         this.operatorStack = [];
         this.currentDisplay = '0';
         this.lastInput = undefined;
@@ -19,14 +20,15 @@ class CalculatorModel {
         this.clearAll = this.clearAll.bind(this);
     }
 
-    appendToLastNumber() {
-        const lastNumOnStack = this.stack[this.stack.length - 1]
-        // if (!this.lastInputIsOperation()) { .push('.'); }
-        // this.currentDisplay.push('.');
+    appendToBuilder(val) {
+        if (this.lastInput === '=') this.stack = [0];
+        this.numberBuilder = this.numberBuilder.concat(val);
+        this.currentDisplay = this.numberBuilder;
+        this.lastInput = val;
     }
 
     addToStack(val) {
-        if (this.lastInput === '=') this.stack = [0];
+        // if (this.lastInput === '=') this.stack = [0];
         this.stack.push(val);
         this.currentDisplay = val.toString();
         this.lastInput = val;
@@ -40,6 +42,13 @@ class CalculatorModel {
     }
 
     performOp(op) {
+        const builtNumber = this.numberBuilder;
+
+        if (builtNumber.length) {
+            this.stack.push(parseFloat(builtNumber));
+            this.numberBuilder = '';
+        }
+
         switch(op) {
 
             case '+':
