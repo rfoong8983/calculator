@@ -10,7 +10,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: url('https://images.wallpaperscraft.com/image/wood_surface_texture_boards_118443_2560x1440.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   height: 100%;
@@ -18,6 +17,11 @@ body {
 }
 
 #root {
+  /* background-image: url('https://images.unsplash.com/photo-1523821741446-edb2b68bb7a0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80'); */
+  background: rgb(50, 61, 77);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   width: 100%;
   height: 100%;
   display: flex;
@@ -33,3 +37,7 @@ code {
 button:focus {
   outline: none;
 }
+
+/* button:hover {
+
+} */

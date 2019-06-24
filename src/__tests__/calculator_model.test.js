@@ -46,6 +46,22 @@ describe('when building a number', () => {
             expect(calc.numberBuilder).toHaveLength(0);
             expect(calc.stack).toHaveLength(1);
         });
+
+        test('it correctly handles trailing zeros', () => {
+            const calc = new CalculatorModel();
+            calc.appendToBuilder('0');
+            calc.appendToBuilder('1');
+            expect(calc.numberBuilder).toHaveLength(1);
+            expect(calc.currentDisplay).toEqual('1');
+        });
+
+        test('it correctly handles trailing zeros', () => {
+            const calc = new CalculatorModel();
+            calc.appendToBuilder('0');
+            calc.appendToBuilder('0');
+            expect(calc.numberBuilder).toHaveLength(1);
+            expect(calc.currentDisplay).toEqual('0');
+        });
     });
 });
 
@@ -55,7 +71,7 @@ describe('adds values to a stack', () => {
 
         test('it does not add a number to the operator stack', () => {
             const calc = new CalculatorModel();
-            calc.appendToBuilder(1);
+            calc.appendToBuilder("1");
             expect(calc.operatorStack).toHaveLength(0);
         });
 
@@ -70,6 +86,28 @@ describe('adds values to a stack', () => {
             const calc = new CalculatorModel();
             calc.appendToBuilder('1');
             expect(calc.currentDisplay).toEqual('1');
+        });
+
+        test('it does only shows strings of length: 18 (without decimals)', () => {
+            const calc = new CalculatorModel();
+            for (let i = 0; i < 20; i++) {
+                calc.appendToBuilder('1');
+            }
+            expect(calc.numberBuilder).toHaveLength(18);
+            expect(calc.numberBuilder).toEqual('111111111111111111');
+        });
+
+        test('it does only shows strings of length: 18 (including decimals)', () => {
+            const calc = new CalculatorModel();
+            for (let i = 0; i < 20; i++) {
+                if (i !== 5) {
+                    calc.appendToBuilder('1');
+                } else {
+                    calc.appendToBuilder('.');
+                }
+            }
+            expect(calc.numberBuilder).toHaveLength(18);
+            expect(calc.numberBuilder).toEqual('11111.111111111111');
         });
     });
 
@@ -105,9 +143,9 @@ describe('adds values to a stack', () => {
 
         test('it updates current display', () => {
             const calc = new CalculatorModel();
-            calc.appendToBuilder(1);
+            calc.appendToBuilder('1');
             calc.performOp('+');
-            calc.appendToBuilder(2);
+            calc.appendToBuilder('2');
             expect(calc.currentDisplay).toEqual('2');
         });
 
@@ -115,45 +153,45 @@ describe('adds values to a stack', () => {
 
             test('add will evaluate the sum of the last two vals on the stack', () => {
                 const calc = new CalculatorModel();
-                calc.appendToBuilder(1);
+                calc.appendToBuilder('1');
                 calc.performOp('+');
-                calc.appendToBuilder(2);
+                calc.appendToBuilder('2');
                 calc.performOp('+');
                 expect(calc.currentDisplay).toEqual('3');
             });
 
             test('subtract will evaluate the sum of the last two vals on the stack', () => {
                 const calc = new CalculatorModel();
-                calc.appendToBuilder(1);
+                calc.appendToBuilder('1');
                 calc.performOp('+');
-                calc.appendToBuilder(2);
+                calc.appendToBuilder('2');
                 calc.performOp('-');
                 expect(calc.currentDisplay).toEqual('3');
             });
 
             test('multiply will display the last input', () => {
                 const calc = new CalculatorModel();
-                calc.appendToBuilder(1);
+                calc.appendToBuilder('1');
                 calc.performOp('+');
-                calc.appendToBuilder(2);
+                calc.appendToBuilder('2');
                 calc.performOp('*');
                 expect(calc.currentDisplay).toEqual('2');
             });
 
             test('divide will evaluate the sum of the last two vals on the stack', () => {
                 const calc = new CalculatorModel();
-                calc.appendToBuilder(1);
+                calc.appendToBuilder('1');
                 calc.performOp('+');
-                calc.appendToBuilder(2);
+                calc.appendToBuilder('2');
                 calc.performOp('/');
                 expect(calc.currentDisplay).toEqual('2');
             });
 
             test('add repeatedly pressed should only evaluate the last two vals once', () => {
                 const calc = new CalculatorModel();
-                calc.appendToBuilder(1);
+                calc.appendToBuilder('1');
                 calc.performOp('+');
-                calc.appendToBuilder(2);
+                calc.appendToBuilder('2');
                 calc.performOp('+');
                 calc.performOp('+');
                 calc.performOp('+');
@@ -162,9 +200,9 @@ describe('adds values to a stack', () => {
             });
             test('subtract repeatedly pressed should only evaluate the last two vals once', () => {
                 const calc = new CalculatorModel();
-                calc.appendToBuilder(1);
+                calc.appendToBuilder('1');
                 calc.performOp('+');
-                calc.appendToBuilder(2);
+                calc.appendToBuilder('2');
                 calc.performOp('-');
                 calc.performOp('*');
                 calc.performOp('*');
@@ -173,9 +211,9 @@ describe('adds values to a stack', () => {
             });
             test('multiply should not cause an error', () => {
                 const calc = new CalculatorModel();
-                calc.appendToBuilder(1);
+                calc.appendToBuilder('1');
                 calc.performOp('+');
-                calc.appendToBuilder(2);
+                calc.appendToBuilder('2');
                 calc.performOp('*');
                 calc.performOp('*');
                 calc.performOp('*');
@@ -184,9 +222,9 @@ describe('adds values to a stack', () => {
             });
             test('divide should not cause an error', () => {
                 const calc = new CalculatorModel();
-                calc.appendToBuilder(1);
+                calc.appendToBuilder('1');
                 calc.performOp('+');
-                calc.appendToBuilder(2);
+                calc.appendToBuilder('2');
                 calc.performOp('/');
                 calc.performOp('/');
                 calc.performOp('/');
@@ -199,45 +237,45 @@ describe('adds values to a stack', () => {
 
             test('add will evaluate the sum of the last two vals on the stack', () => {
                 const calc = new CalculatorModel();
-                calc.appendToBuilder(1);
+                calc.appendToBuilder('1');
                 calc.performOp('-');
-                calc.appendToBuilder(2);
+                calc.appendToBuilder('2');
                 calc.performOp('+');
                 expect(calc.currentDisplay).toEqual('-1');
             });
 
             test('subtract will evaluate the sum of the last two vals on the stack', () => {
                 const calc = new CalculatorModel();
-                calc.appendToBuilder(1);
+                calc.appendToBuilder('1');
                 calc.performOp('-');
-                calc.appendToBuilder(2);
+                calc.appendToBuilder('2');
                 calc.performOp('-');
                 expect(calc.currentDisplay).toEqual('-1');
             });
 
             test('multiply will display the last input', () => {
                 const calc = new CalculatorModel();
-                calc.appendToBuilder(3);
+                calc.appendToBuilder('3');
                 calc.performOp('-');
-                calc.appendToBuilder(2);
+                calc.appendToBuilder('2');
                 calc.performOp('*');
                 expect(calc.currentDisplay).toEqual('2');
             });
 
             test('divide will evaluate the sum of the last two vals on the stack', () => {
                 const calc = new CalculatorModel();
-                calc.appendToBuilder(3);
+                calc.appendToBuilder('3');
                 calc.performOp('-');
-                calc.appendToBuilder(2);
+                calc.appendToBuilder('2');
                 calc.performOp('/');
                 expect(calc.currentDisplay).toEqual('2');
             });
 
             test('add repeatedly pressed should only evaluate the last two vals once', () => {
                 const calc = new CalculatorModel();
-                calc.appendToBuilder(1);
+                calc.appendToBuilder('1');
                 calc.performOp('-');
-                calc.appendToBuilder(2);
+                calc.appendToBuilder('2');
                 calc.performOp('+');
                 calc.performOp('+');
                 calc.performOp('+');
@@ -246,9 +284,9 @@ describe('adds values to a stack', () => {
             });
             test('subtract repeatedly pressed should only evaluate the last two vals once', () => {
                 const calc = new CalculatorModel();
-                calc.appendToBuilder(1);
+                calc.appendToBuilder('1');
                 calc.performOp('-');
-                calc.appendToBuilder(2);
+                calc.appendToBuilder('2');
                 calc.performOp('-');
                 calc.performOp('*');
                 calc.performOp('*');
@@ -257,9 +295,9 @@ describe('adds values to a stack', () => {
             });
             test('multiply should not cause an error', () => {
                 const calc = new CalculatorModel();
-                calc.appendToBuilder(1);
+                calc.appendToBuilder('1');
                 calc.performOp('-');
-                calc.appendToBuilder(2);
+                calc.appendToBuilder('2');
                 calc.performOp('*');
                 calc.performOp('*');
                 calc.performOp('*');
@@ -268,9 +306,9 @@ describe('adds values to a stack', () => {
             });
             test('divide should not cause an error', () => {
                 const calc = new CalculatorModel();
-                calc.appendToBuilder(1);
+                calc.appendToBuilder('1');
                 calc.performOp('-');
-                calc.appendToBuilder(2);
+                calc.appendToBuilder('2');
                 calc.performOp('/');
                 calc.performOp('/');
                 calc.performOp('/');
@@ -283,49 +321,49 @@ describe('adds values to a stack', () => {
 
             test('add will evaluate the rest of the stack', () => {
                 const calc = new CalculatorModel();
-                calc.appendToBuilder(1);
+                calc.appendToBuilder('1');
                 calc.performOp('+');
-                calc.appendToBuilder(2);
+                calc.appendToBuilder('2');
                 calc.performOp('*');
-                calc.appendToBuilder(3);
+                calc.appendToBuilder('3');
                 calc.performOp('+');
                 expect(calc.currentDisplay).toEqual('7');
             });
 
             test('subtract will evaluate the rest of the stack', () => {
                 const calc = new CalculatorModel();
-                calc.appendToBuilder(1);
+                calc.appendToBuilder('1');
                 calc.performOp('-');
-                calc.appendToBuilder(2);
+                calc.appendToBuilder('2');
                 calc.performOp('*');
-                calc.appendToBuilder(3);
+                calc.appendToBuilder('3');
                 calc.performOp('-');
                 expect(calc.currentDisplay).toEqual('-5');
             });
 
             test('multiply will evaluate the last two vals on the stack', () => {
                 const calc = new CalculatorModel();
-                calc.appendToBuilder(3);
+                calc.appendToBuilder('3');
                 calc.performOp('*');
-                calc.appendToBuilder(2);
+                calc.appendToBuilder('2');
                 calc.performOp('*');
                 expect(calc.currentDisplay).toEqual('6');
             });
 
             test('divide will evaluate the last two vals on the stack', () => {
                 const calc = new CalculatorModel();
-                calc.appendToBuilder(3);
+                calc.appendToBuilder('3');
                 calc.performOp('*');
-                calc.appendToBuilder(2);
+                calc.appendToBuilder('2');
                 calc.performOp('/');
                 expect(calc.currentDisplay).toEqual('6');
             });
 
             test('add repeatedly pressed should only evaluate the last two vals once', () => {
                 const calc = new CalculatorModel();
-                calc.appendToBuilder(3);
+                calc.appendToBuilder('3');
                 calc.performOp('*');
-                calc.appendToBuilder(2);
+                calc.appendToBuilder('2');
                 calc.performOp('+');
                 calc.performOp('+');
                 calc.performOp('+');
@@ -334,9 +372,9 @@ describe('adds values to a stack', () => {
             });
             test('subtract repeatedly pressed should only evaluate the last two vals once', () => {
                 const calc = new CalculatorModel();
-                calc.appendToBuilder(3);
+                calc.appendToBuilder('3');
                 calc.performOp('*');
-                calc.appendToBuilder(2);
+                calc.appendToBuilder('2');
                 calc.performOp('-');
                 calc.performOp('*');
                 calc.performOp('*');
@@ -345,9 +383,9 @@ describe('adds values to a stack', () => {
             });
             test('multiply should not cause an error', () => {
                 const calc = new CalculatorModel();
-                calc.appendToBuilder(1);
+                calc.appendToBuilder('1');
                 calc.performOp('*');
-                calc.appendToBuilder(2);
+                calc.appendToBuilder('2');
                 calc.performOp('*');
                 calc.performOp('*');
                 calc.performOp('*');
@@ -356,9 +394,9 @@ describe('adds values to a stack', () => {
             });
             test('divide should not cause an error', () => {
                 const calc = new CalculatorModel();
-                calc.appendToBuilder(1);
+                calc.appendToBuilder('1');
                 calc.performOp('*');
-                calc.appendToBuilder(2);
+                calc.appendToBuilder('2');
                 calc.performOp('/');
                 calc.performOp('/');
                 calc.performOp('/');
@@ -371,81 +409,81 @@ describe('adds values to a stack', () => {
 
             test('add will evaluate the last operation', () => {
                 const calc = new CalculatorModel();
-                calc.appendToBuilder(1);
+                calc.appendToBuilder('1');
                 calc.performOp('/');
-                calc.appendToBuilder(2);
+                calc.appendToBuilder('2');
                 calc.performOp('+');
                 expect(calc.currentDisplay).toEqual('0.5');
             });
 
             test('subtract will evaluate the last operation', () => {
                 const calc = new CalculatorModel();
-                calc.appendToBuilder(1);
+                calc.appendToBuilder('1');
                 calc.performOp('/');
-                calc.appendToBuilder(2);
+                calc.appendToBuilder('2');
                 calc.performOp('-');
                 expect(calc.currentDisplay).toEqual('0.5');
             });
 
             test('multiply will evaluate the the last operation', () => {
                 const calc = new CalculatorModel();
-                calc.appendToBuilder(1);
+                calc.appendToBuilder('1');
                 calc.performOp('/');
-                calc.appendToBuilder(2);
+                calc.appendToBuilder('2');
                 calc.performOp('*');
                 expect(calc.currentDisplay).toEqual('0.5');
             });
 
             test('divide will evaluate the last operation', () => {
                 const calc = new CalculatorModel();
-                calc.appendToBuilder(1);
+                calc.appendToBuilder('1');
                 calc.performOp('/');
-                calc.appendToBuilder(2);
+                calc.appendToBuilder('2');
                 calc.performOp('/');
                 expect(calc.currentDisplay).toEqual('0.5');
             });
 
             test('(long decimals) add will evaluate the last operation', () => {
                 const calc = new CalculatorModel();
-                calc.appendToBuilder(2);
+                calc.appendToBuilder('2');
                 calc.performOp('/');
-                calc.appendToBuilder(3);
+                calc.appendToBuilder('3');
                 calc.performOp('+');
                 expect(calc.currentDisplay).toEqual('0.6666666666666666');
             });
 
             test('(long decimals) subtract will evaluate the last operation', () => {
                 const calc = new CalculatorModel();
-                calc.appendToBuilder(2);
+                calc.appendToBuilder('2');
                 calc.performOp('/');
-                calc.appendToBuilder(3);
+                calc.appendToBuilder('3');
                 calc.performOp('-');
                 expect(calc.currentDisplay).toEqual('0.6666666666666666');
             });
 
             test('(long decimals) multiply will evaluate the the last operation', () => {
                 const calc = new CalculatorModel();
-                calc.appendToBuilder(2);
+                calc.appendToBuilder('2');
                 calc.performOp('/');
-                calc.appendToBuilder(3);
+                calc.appendToBuilder('3');
                 calc.performOp('*');
                 expect(calc.currentDisplay).toEqual('0.6666666666666666');
             });
 
             test('(long decimals) divide will evaluate the last operation', () => {
                 const calc = new CalculatorModel();
-                calc.appendToBuilder(2);
+                calc.appendToBuilder('2');
                 calc.performOp('/');
-                calc.appendToBuilder(3);
+                calc.appendToBuilder('3');
                 calc.performOp('/');
                 expect(calc.currentDisplay).toEqual('0.6666666666666666');
             });
 
             test('add repeatedly pressed should only evaluate the last two vals once', () => {
                 const calc = new CalculatorModel();
-                calc.appendToBuilder(1);
+                calc.appendToBuilder('1');
                 calc.performOp('/');
-                calc.appendToBuilder(2);
+                calc.appendToBuilder('2');
                 calc.performOp('+');
                 calc.performOp('+');
                 calc.performOp('+');
@@ -454,9 +492,9 @@ describe('adds values to a stack', () => {
             });
             test('subtract repeatedly pressed should only evaluate the last two vals once', () => {
                 const calc = new CalculatorModel();
-                calc.appendToBuilder(1);
+                calc.appendToBuilder('1');
                 calc.performOp('/');
-                calc.appendToBuilder(2);
+                calc.appendToBuilder('2');
                 calc.performOp('-');
                 calc.performOp('*');
                 calc.performOp('*');
@@ -465,9 +503,9 @@ describe('adds values to a stack', () => {
             });
             test('multiply should not cause an error', () => {
                 const calc = new CalculatorModel();
-                calc.appendToBuilder(1);
+                calc.appendToBuilder('1');
                 calc.performOp('/');
-                calc.appendToBuilder(2);
+                calc.appendToBuilder('2');
                 calc.performOp('*');
                 calc.performOp('*');
                 calc.performOp('*');
@@ -476,9 +514,9 @@ describe('adds values to a stack', () => {
             });
             test('divide should not cause an error', () => {
                 const calc = new CalculatorModel();
-                calc.appendToBuilder(1);
+                calc.appendToBuilder('1');
                 calc.performOp('/');
-                calc.appendToBuilder(2);
+                calc.appendToBuilder('2');
                 calc.performOp('/');
                 calc.performOp('/');
                 calc.performOp('/');
@@ -488,9 +526,9 @@ describe('adds values to a stack', () => {
 
             test('(long decimals) add repeatedly pressed should only evaluate the last two vals once', () => {
                 const calc = new CalculatorModel();
-                calc.appendToBuilder(2);
+                calc.appendToBuilder('2');
                 calc.performOp('/');
-                calc.appendToBuilder(3);
+                calc.appendToBuilder('3');
                 calc.performOp('+');
                 calc.performOp('+');
                 calc.performOp('+');
@@ -499,9 +537,9 @@ describe('adds values to a stack', () => {
             });
             test('(long decimals) subtract repeatedly pressed should only evaluate the last two vals once', () => {
                 const calc = new CalculatorModel();
-                calc.appendToBuilder(2);
+                calc.appendToBuilder('2');
                 calc.performOp('/');
-                calc.appendToBuilder(3);
+                calc.appendToBuilder('3');
                 calc.performOp('-');
                 calc.performOp('*');
                 calc.performOp('*');
@@ -510,9 +548,9 @@ describe('adds values to a stack', () => {
             });
             test('(long decimals) multiply should not cause an error', () => {
                 const calc = new CalculatorModel();
-                calc.appendToBuilder(2);
+                calc.appendToBuilder('2');
                 calc.performOp('/');
-                calc.appendToBuilder(3);
+                calc.appendToBuilder('3');
                 calc.performOp('*');
                 calc.performOp('*');
                 calc.performOp('*');
@@ -521,9 +559,9 @@ describe('adds values to a stack', () => {
             });
             test('(long decimals) divide should not cause an error', () => {
                 const calc = new CalculatorModel();
-                calc.appendToBuilder(2);
+                calc.appendToBuilder('2');
                 calc.performOp('/');
-                calc.appendToBuilder(3);
+                calc.appendToBuilder('3');
                 calc.performOp('/');
                 calc.performOp('/');
                 calc.performOp('/');
@@ -538,9 +576,9 @@ describe('handles invalid equations', () => {
     test('it will not divide by 0', () => {
         const calc = new CalculatorModel();
         calc.performOp('/');
-        calc.appendToBuilder(0);
+        calc.appendToBuilder('0');
         calc.performOp('-');
-        calc.appendToBuilder(3);
+        calc.appendToBuilder('3');
         calc.performOp('=');
         expect(calc.currentDisplay).toEqual('NaN');
     });
@@ -550,11 +588,11 @@ describe('if the button value is AC', () => {
 
     test('it clears both stacks', () => {
         const calc = new CalculatorModel();
-        calc.appendToBuilder(2);
+        calc.appendToBuilder('2');
         calc.performOp('+');
-        calc.appendToBuilder(2);
+        calc.appendToBuilder('2');
         calc.performOp('-');
-        calc.appendToBuilder(3);
+        calc.appendToBuilder('3');
         calc.performOp('=');
         calc.clearAll();
         expect(calc.stack).toHaveLength(0);
@@ -565,9 +603,9 @@ describe('if the button value is AC', () => {
     test('it clears both stacks', () => {
         const calc = new CalculatorModel();
         calc.performOp('/');
-        calc.appendToBuilder(2);
+        calc.appendToBuilder('2');
         calc.performOp('*');
-        calc.appendToBuilder(3);
+        calc.appendToBuilder('3');
         calc.performOp('=');
         calc.clearAll();
         expect(calc.stack).toHaveLength(0);
@@ -583,11 +621,11 @@ describe('if the button value is equals', () => {
         test('it evaluates the entire stack and the number stack only contains the result', () => {
 
             const calc = new CalculatorModel();
-            calc.appendToBuilder(2);
+            calc.appendToBuilder('2');
             calc.performOp('+');
-            calc.appendToBuilder(2);
+            calc.appendToBuilder('2');
             calc.performOp('-');
-            calc.appendToBuilder(3);
+            calc.appendToBuilder('3');
             calc.performOp('=');
             expect(calc.stack).toHaveLength(2);
             expect(calc.currentDisplay).toEqual('1');
@@ -596,11 +634,11 @@ describe('if the button value is equals', () => {
         test('it evaluates the entire stack and the number stack only contains the result', () => {
 
             const calc = new CalculatorModel();
-            calc.appendToBuilder(2);
+            calc.appendToBuilder('2');
             calc.performOp('*');
-            calc.appendToBuilder(2);
+            calc.appendToBuilder('2');
             calc.performOp('*');
-            calc.appendToBuilder(3);
+            calc.appendToBuilder('3');
             calc.performOp('=');
             expect(calc.stack).toHaveLength(2);
             expect(calc.currentDisplay).toEqual('12');
@@ -609,11 +647,11 @@ describe('if the button value is equals', () => {
         test('it evaluates the entire stack and the number stack only contains the result', () => {
 
             const calc = new CalculatorModel();
-            calc.appendToBuilder(2);
+            calc.appendToBuilder('2');
             calc.performOp('/');
-            calc.appendToBuilder(3);
+            calc.appendToBuilder('3');
             calc.performOp('*');
-            calc.appendToBuilder(4);
+            calc.appendToBuilder('4');
             calc.performOp('=');
             expect(calc.stack).toHaveLength(2);
             expect(calc.currentDisplay).toEqual('2.6666666666666665');
@@ -622,11 +660,11 @@ describe('if the button value is equals', () => {
         test('it evaluates the entire stack and empties the operator stack', () => {
 
             const calc = new CalculatorModel();
-            calc.appendToBuilder(2);
+            calc.appendToBuilder('2');
             calc.performOp('/');
-            calc.appendToBuilder(3);
+            calc.appendToBuilder('3');
             calc.performOp('*');
-            calc.appendToBuilder(2);
+            calc.appendToBuilder('2');
             calc.performOp('=');
             expect(calc.stack).toHaveLength(2);
             expect(calc.currentDisplay).toEqual('1.3333333333333333');
@@ -639,15 +677,15 @@ describe('if the button value is equals', () => {
         test('it evaluates the entire stack (add/subtr) and the number stack only contains the result', () => {
 
             const calc = new CalculatorModel();
-            calc.appendToBuilder(1);
+            calc.appendToBuilder('1');
             // console.log(calc.stack, calc.operatorStack, calc.currentDisplay);
             calc.performOp('+');
             // console.log(calc.stack, calc.operatorStack, calc.currentDisplay);
-            calc.appendToBuilder(2);
+            calc.appendToBuilder('2');
             // console.log(calc.stack, calc.operatorStack, calc.currentDisplay);
             calc.performOp('*');
             // console.log(calc.stack, calc.operatorStack, calc.currentDisplay);
-            calc.appendToBuilder(3);
+            calc.appendToBuilder('3');
             // console.log(calc.stack, calc.operatorStack, calc.currentDisplay);
             calc.performOp('=');
             // console.log(calc.stack, calc.operatorStack, calc.currentDisplay);
@@ -658,11 +696,11 @@ describe('if the button value is equals', () => {
         test('it evaluates the entire stack (add/subtr) and the number stack only contains the result', () => {
 
             const calc = new CalculatorModel();
-            calc.appendToBuilder(1);
+            calc.appendToBuilder('1');
             calc.performOp('-');
-            calc.appendToBuilder(2);
+            calc.appendToBuilder('2');
             calc.performOp('/');
-            calc.appendToBuilder(3);
+            calc.appendToBuilder('3');
             calc.performOp('=');
             expect(calc.stack).toHaveLength(2);
             expect(calc.currentDisplay).toEqual('0.33333333333333337');
@@ -671,11 +709,11 @@ describe('if the button value is equals', () => {
         test('it evaluates the entire stack (mult/div) and the number stack only contains the result', () => {
 
             const calc = new CalculatorModel();
-            calc.appendToBuilder(1);
+            calc.appendToBuilder('1');
             calc.performOp('-');
-            calc.appendToBuilder(2);
+            calc.appendToBuilder('2');
             calc.performOp('*');
-            calc.appendToBuilder(3);
+            calc.appendToBuilder('3');
             calc.performOp('=');
             expect(calc.stack).toHaveLength(2);
             expect(calc.currentDisplay).toEqual('-5');
@@ -685,9 +723,9 @@ describe('if the button value is equals', () => {
 
             const calc = new CalculatorModel();
             calc.performOp('+');
-            calc.appendToBuilder(2);
+            calc.appendToBuilder('2');
             calc.performOp('*');
-            calc.appendToBuilder(3);
+            calc.appendToBuilder('3');
             calc.performOp('=');
             expect(calc.stack).toHaveLength(1);
             expect(calc.currentDisplay).toEqual('6');
@@ -697,9 +735,9 @@ describe('if the button value is equals', () => {
 
             const calc = new CalculatorModel();
             calc.performOp('*');
-            calc.appendToBuilder(2);
+            calc.appendToBuilder('2');
             calc.performOp('*');
-            calc.appendToBuilder(3);
+            calc.appendToBuilder('3');
             calc.performOp('=');
             expect(calc.stack).toHaveLength(1);
             expect(calc.currentDisplay).toEqual('0');
@@ -709,9 +747,9 @@ describe('if the button value is equals', () => {
 
             const calc = new CalculatorModel();
             calc.performOp('/');
-            calc.appendToBuilder(2);
+            calc.appendToBuilder('2');
             calc.performOp('*');
-            calc.appendToBuilder(3);
+            calc.appendToBuilder('3');
             calc.performOp('=');
             expect(calc.currentDisplay).toEqual('0');
         });
@@ -721,11 +759,11 @@ describe('if the button value is equals', () => {
         test('it should reset the stacks', () => {
             const calc = new CalculatorModel();
             calc.performOp('+');
-            calc.appendToBuilder(2);
+            calc.appendToBuilder('2');
             calc.performOp('*');
-            calc.appendToBuilder(3);
+            calc.appendToBuilder('3');
             calc.performOp('=');
-            calc.appendToBuilder(1);
+            calc.appendToBuilder('1');
             expect(calc.stack).toHaveLength(1);
             expect(calc.numberBuilder).toEqual('1');
             expect(calc.operatorStack).toHaveLength(0);
@@ -734,23 +772,74 @@ describe('if the button value is equals', () => {
     });
 
     describe('if the button pressed after equals is an operation', () => {
-        test('it should continue calculations', () => {
+        test('it should continue calculations (add)', () => {
             const calc = new CalculatorModel();
             calc.performOp('+');
-            calc.appendToBuilder(2);
+            calc.appendToBuilder('2');
             calc.performOp('*');
-            calc.appendToBuilder(3);
+            calc.appendToBuilder('3');
+            calc.performOp('=');
+            calc.performOp('+');
+            calc.appendToBuilder('4');
+            calc.performOp('=');
+            calc.performOp('=');
+            // console.log(calc.stack, calc.operatorStack, calc.currentDisplay);
+            expect(calc.stack).toHaveLength(1);
+            expect(calc.currentDisplay).toEqual('10');
+        });
+        test('it should continue calculations (subtr)', () => {
+            const calc = new CalculatorModel();
+            calc.performOp('+');
+            calc.appendToBuilder('2');
+            calc.performOp('*');
+            calc.appendToBuilder('3');
+            calc.performOp('=');
+            // console.log(calc.stack, calc.operatorStack, calc.currentDisplay);
+            calc.performOp('-');
+            // console.log(calc.stack, calc.operatorStack, calc.currentDisplay);
+            calc.appendToBuilder('8');
+            // console.log(calc.stack, calc.operatorStack, calc.currentDisplay);
+            calc.performOp('=');
+            calc.performOp('=');
+            // console.log(calc.stack, calc.operatorStack, calc.currentDisplay);
+            expect(calc.stack).toHaveLength(1);
+            expect(calc.currentDisplay).toEqual('-2');
+        });
+        test('it should continue calculations (mult)', () => {
+            const calc = new CalculatorModel();
+            calc.performOp('+');
+            calc.appendToBuilder('2');
+            calc.performOp('*');
+            calc.appendToBuilder('3');
             calc.performOp('=');
             // console.log(calc.stack, calc.operatorStack, calc.currentDisplay);
             calc.performOp('*');
             // console.log(calc.stack, calc.operatorStack, calc.currentDisplay);
-            calc.appendToBuilder(4);
+            calc.appendToBuilder('4');
             // console.log(calc.stack, calc.operatorStack, calc.currentDisplay);
             calc.performOp('=');
             calc.performOp('=');
             // console.log(calc.stack, calc.operatorStack, calc.currentDisplay);
             expect(calc.stack).toHaveLength(1);
             expect(calc.currentDisplay).toEqual('24');
+        });
+        test('it should continue calculations (div)', () => {
+            const calc = new CalculatorModel();
+            calc.performOp('+');
+            calc.appendToBuilder('2');
+            calc.performOp('*');
+            calc.appendToBuilder('3');
+            calc.performOp('=');
+            // console.log(calc.stack, calc.operatorStack, calc.currentDisplay);
+            calc.performOp('/');
+            // console.log(calc.stack, calc.operatorStack, calc.currentDisplay);
+            calc.appendToBuilder('12');
+            // console.log(calc.stack, calc.operatorStack, calc.currentDisplay);
+            calc.performOp('=');
+            calc.performOp('=');
+            // console.log(calc.stack, calc.operatorStack, calc.currentDisplay);
+            expect(calc.stack).toHaveLength(1);
+            expect(calc.currentDisplay).toEqual('0.5');
         });
     });
 });

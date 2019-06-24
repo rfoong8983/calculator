@@ -11,11 +11,13 @@ class Calculator extends React.Component {
             currentDisplay: 0
         };
 
+        // Created separate arrays to organize button positions;
         this.zeroDecimal = ['0', '.'];
         this.numbers = ['7', '8', '9', '4', '5', '6', '1', '2', '3'];
         this.operators = ['+', '-', '*', '/', '='];
         this.utilities = ['AC'];
 
+        this.handleKeyPress = this.handleKeyPress.bind(this);
         this.displaySection = this.displaySection.bind(this);
         this.updateCurrentDisplay = this.updateCurrentDisplay.bind(this);
     }
@@ -28,6 +30,24 @@ class Calculator extends React.Component {
         this.setState(_ => {
             return {currentDisplay: newDisplay};
         });
+    }
+
+    handleKeyPress = (event) => {
+        event.preventDefault();
+        const model = this.state.model;
+        if (event.key === 'Enter') event.key = '=';
+        
+        if (model.isOperation(event.key) || model.isEquals(event.key)) {
+            model.performOp(event.key);
+        } else if (model.isUtility(event.key)) {
+            model.clearAll(event.key);
+        } else if (model.isNumber(event.key)) {
+            model.appendToBuilder(event.key);
+        } else {
+            return;
+        }
+
+        this.updateCurrentDisplay();
     }
     
 
@@ -46,9 +66,9 @@ class Calculator extends React.Component {
 
     render() {
         return (
-            <>
+            <div className="calculator__wrapper" onKeyDown={this.handleKeyPress}>
                 <div className="calculator__screen">
-                    {this.state.currentDisplay}
+                    <p>{this.state.currentDisplay}</p>
                 </div>
 
                 <div className="calculator__columnWrapper">
@@ -70,7 +90,7 @@ class Calculator extends React.Component {
                         </div>
                     </div>
                 </div>
-            </>
+            </div>
         )
     }
 }

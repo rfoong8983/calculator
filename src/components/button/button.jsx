@@ -1,4 +1,5 @@
 import React from 'react';
+import '../../stylesheets/button.css';
 
 class Button extends React.Component {
     constructor(props) {
@@ -14,7 +15,7 @@ class Button extends React.Component {
         const buttonVal = this.val;
         const model = this.model;
 
-        if (model.isOperation(buttonVal)) {
+        if (model.isOperation(buttonVal) || model.isEquals(buttonVal)) {
             model.performOp(buttonVal);
         } else if (model.isUtility(buttonVal)) {
             model.clearAll(buttonVal);
@@ -27,7 +28,7 @@ class Button extends React.Component {
 
     render() {
         return(
-            <button className="calculator_buttons" onClick={this.handleClick}>
+            <button id={`button__${this.val}`} onClick={this.handleClick}>
                 {this.val}
             </button>
         )

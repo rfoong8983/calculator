@@ -9,8 +9,7 @@ class CalculatorModel {
             '+': true,
             '-': true,
             '*': true,
-            '/': true,
-            '=': true
+            '/': true
         };
         this.utilities = {
             'AC': true
@@ -21,10 +20,17 @@ class CalculatorModel {
     }
 
     appendToBuilder(val) {
-        if (this.lastInput === '=') this.stack = [0];
-        if (val === '.' && this.invalidDecimal()) return;
+        if (this.limitNumberOfDigits()) return;
+        this.resetStackAfterEquals();
+        if (this.preventMultipleDecimals(val)) return;
+        if (this.preventMultipleZeros(val)) return;
 
-        this.numberBuilder = this.numberBuilder.concat(val);
+        if (this.replaceFirstZero(val)) {
+            this.numberBuilder = val;
+        } else {
+            this.numberBuilder = this.numberBuilder.concat(val);
+        }
+        
         this.currentDisplay = this.numberBuilder;
         this.lastInput = val;
     }
@@ -81,6 +87,7 @@ class CalculatorModel {
 
                 break;
 
+            case 'Enter':
             case '=':
                 if (this.lastInputIsOperation()) {
                     this.operatorStack.pop();
@@ -151,6 +158,27 @@ class CalculatorModel {
         }
     }
 
+    limitNumberOfDigits() {
+        if (this.numberBuilder.length === 18) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    preventMultipleDecimals(val) {
+        const lastChar = this.getLastCharacter();
+        if ((lastChar === '.' || this.numberBuilder.includes('.')) && val === '.') {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    resetStackAfterEquals() {
+        if (this.lastInput === '=') this.stack = [0];
+    }
+
     getLastCharacter() {
         let lastIdx = 0;
         if (this.numberBuilder.length) {
@@ -183,9 +211,46 @@ class CalculatorModel {
         return lastOp in this.ops;
     }
 
+    preventMultipleZeros(val) {
+        const len = this.numberBuilder.length;
+        const lastChar = this.getLastCharacter();
+
+        if (val === '0' && len === 1 && lastChar === '0') {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    replaceFirstZero(val) {
+        const len = this.numberBuilder.length;
+        const lastChar = this.getLastCharacter();
+        const validNums = {
+            // does not include 0
+            '1': true, '2': true, '3': true,
+            '4': true, '5': true, '6': true,
+            '7': true, '8': true, '9': true
+        }
+        
+        if (val in validNums && len === 1 && lastChar === '0') {
+            return true;
+        } 
+    }
+
+    isNumber(val) {
+        // created so handleKeyPress only accepts numbers
+        const nums = {
+            '1': true, '2': true, '3': true, 
+            '4': true, '5': true, '6': true, 
+            '7': true, '8': true, '9': true, '0': true
+        }
+
+        return val in nums;
+    }
     isDecimal(val) { return val === '.'; }
     isUtility(val) { return val in this.utilities; }
     isOperation(val) { return val in this.ops; }
+    isEquals(val) { return val === '=' || val === 'Enter'; } // split out from operations for calc logic
     lastInputIsOperation() { return this.lastInput in this.ops; }
     lastOperationIsNotSameAs(val) { return this.lastInput !== val && this.lastInputIsOperation(); }
 }
