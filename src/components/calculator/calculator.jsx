@@ -1,6 +1,7 @@
 import React from 'react';
-import Button from '../button/button';
 import CalculatorModel from './calculator_model';
+import Button from '../button/button';
+import '../../stylesheets/calculator.css';
 
 class Calculator extends React.Component {
     constructor(props) {
@@ -11,7 +12,7 @@ class Calculator extends React.Component {
         };
 
         this.zeroDecimal = ['0', '.'];
-        this.numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
+        this.numbers = ['7', '8', '9', '4', '5', '6', '1', '2', '3'];
         this.operators = ['+', '-', '*', '/', '='];
         this.utilities = ['AC'];
 
@@ -21,9 +22,11 @@ class Calculator extends React.Component {
 
     updateCurrentDisplay() {
         const model = this.state.model;
+        let newDisplay = model.currentDisplay;
+        if (newDisplay[0] === '.') newDisplay = '0' + newDisplay;
 
         this.setState(_ => {
-            return {currentDisplay: model.currentDisplay};
+            return {currentDisplay: newDisplay};
         });
     }
     
@@ -44,19 +47,28 @@ class Calculator extends React.Component {
     render() {
         return (
             <>
-                <div>myNewCalculator</div>
                 <div className="calculator__screen">
                     {this.state.currentDisplay}
                 </div>
-                <br></br>
-                <div className="calculator__numbers">
-                    {this.displaySection(this.numbers)}
-                </div>
-                <div className="calculator__zeroDecimal">
-                    {this.displaySection(this.zeroDecimal)}
-                </div>
-                <div className="calculator__operations">
-                    {this.displaySection(this.utilities)}
+
+                <div className="calculator__columnWrapper">
+                    <div className="calculator__leftColumn">
+                        <div className="calculator__utilities">
+                            {this.displaySection(this.utilities)}
+                        </div>
+                        <div className="calculator__numbers">
+                            {this.displaySection(this.numbers)}
+                        </div>
+                        <div className="calculator__zeroDecimal">
+                            {this.displaySection(this.zeroDecimal)}
+                        </div>
+                    </div>
+
+                    <div className="calculator__rightColumn">
+                        <div className="calculator__operators">
+                            {this.displaySection(this.operators)}
+                        </div>
+                    </div>
                 </div>
             </>
         )

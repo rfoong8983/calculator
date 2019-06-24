@@ -1,0 +1,10 @@
+.calculator__wrapper {
+  display: flex;
+  height: 57%;
+  width: 40%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+}
+

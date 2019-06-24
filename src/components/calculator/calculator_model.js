@@ -23,14 +23,13 @@ class CalculatorModel {
     appendToBuilder(val) {
         if (this.lastInput === '=') this.stack = [0];
         if (val === '.' && this.invalidDecimal()) return;
-        
+
         this.numberBuilder = this.numberBuilder.concat(val);
         this.currentDisplay = this.numberBuilder;
         this.lastInput = val;
     }
 
     addToStack(val) {
-        // if (this.lastInput === '=') this.stack = [0];
         this.stack.push(val);
         this.currentDisplay = val.toString();
         this.lastInput = val;
@@ -40,6 +39,7 @@ class CalculatorModel {
         this.stack = [];
         this.operatorStack = [];
         this.currentDisplay = '0';
+        this.numberBuilder = '';
         this.lastInput = undefined;
     }
 
@@ -83,7 +83,9 @@ class CalculatorModel {
 
             case '=':
                 if (this.lastInputIsOperation()) {
-                    break;
+                    this.operatorStack.pop();
+                    this.operatorStack.push(op);
+                    this.lastInput = op;
                 }
                 this.evalStack();
                 this.lastInput = '=';
@@ -138,7 +140,6 @@ class CalculatorModel {
     }
 
     validNumberBuilder() {
-        // '.' is not valid; length > 0;
         if (!this.numberBuilder.length) return false;
         return true;
     }

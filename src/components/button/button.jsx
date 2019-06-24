@@ -21,25 +21,13 @@ class Button extends React.Component {
         } else {
             model.appendToBuilder(buttonVal);
         }
-
-        // if (model.isOperation(buttonVal)) {
-        //     model.performOp(buttonVal);
-
-        // } else if (model.isUtility(buttonVal)) {
-        //     model.clearAll(buttonVal);
-
-        // } else if (model.isDecimal(buttonVal)) {
-            
-        // } else {
-        //     model.addToStack(parseInt(buttonVal));
-        // }
         
         this.updateCurrentDisplay();
     }
 
     render() {
         return(
-            <button onClick={this.handleClick}>
+            <button className="calculator_buttons" onClick={this.handleClick}>
                 {this.val}
             </button>
         )

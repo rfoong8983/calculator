@@ -1,0 +1,68 @@
+.calculator__screen {
+    width: 50%;
+    align-items: center;
+    border: 1px solid black;
+}
+
+.calculator__columnWrapper {
+    width: 50%;
+    display: flex;
+    border: 1px solid black;
+    outline: none;
+}
+
+.calculator__leftColumn {
+    width: 80%;
+}
+
+.calculator__rightColumn {
+    width: 20%;
+}
+
+.calculator__utilities {
+    display: flex;
+    border: 1px solid black;
+}
+
+.calculator__utilities button {
+    width: 100%;
+    height: 100%;
+    border: 1px solid black;
+}
+
+.calculator__numbers {
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid black;
+}
+
+.calculator__numbers button {
+    flex: 1 0 33%;
+    border: 1px solid black;
+    background-image: url('http://www.sclance.com/pngs/nyan-cat-png/nyan_cat_png_945051.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.calculator__zeroDecimal {
+    display: flex;
+    border: 1px solid black;
+}
+
+.calculator__zeroDecimal button {
+    flex: 1 0 50%;
+    border: 1px solid black;
+}
+
+.calculator__operators {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    border: 1px solid black;
+}
+
+.calculator__operators button {
+    flex: 1 0 20%;
+    border: 1px solid black;
+}

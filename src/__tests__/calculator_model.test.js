@@ -41,6 +41,7 @@ describe('when building a number', () => {
             calc.appendToBuilder('.');
             calc.appendToBuilder('.');
             expect(calc.numberBuilder).toHaveLength(1);
+            expect(calc.currentDisplay).toEqual('.');
             calc.performOp('+');
             expect(calc.numberBuilder).toHaveLength(0);
             expect(calc.stack).toHaveLength(1);
