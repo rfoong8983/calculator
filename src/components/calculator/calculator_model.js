@@ -22,6 +22,8 @@ class CalculatorModel {
 
     appendToBuilder(val) {
         if (this.lastInput === '=') this.stack = [0];
+        if (val === '.' && this.invalidDecimal()) return;
+        
         this.numberBuilder = this.numberBuilder.concat(val);
         this.currentDisplay = this.numberBuilder;
         this.lastInput = val;
@@ -42,12 +44,7 @@ class CalculatorModel {
     }
 
     performOp(op) {
-        const builtNumber = this.numberBuilder;
-
-        if (builtNumber.length) {
-            this.stack.push(parseFloat(builtNumber));
-            this.numberBuilder = '';
-        }
+        this.buildNumber();
 
         switch(op) {
 
@@ -127,6 +124,39 @@ class CalculatorModel {
     }
 
     // helper functions
+
+    buildNumber() {
+        const builtNumber = this.numberBuilder;
+        
+        if (builtNumber === '.') {
+            if (this.stack[0] !== 0) this.stack.push(0);
+        } else if (this.validNumberBuilder()) {
+            this.stack.push(parseFloat(builtNumber));
+        }
+
+        this.numberBuilder = '';
+    }
+
+    validNumberBuilder() {
+        // '.' is not valid; length > 0;
+        if (!this.numberBuilder.length) return false;
+        return true;
+    }
+
+    invalidDecimal() {
+        const lastChar = this.getLastCharacter();
+        if (lastChar === '.' || this.numberBuilder.includes('.')) {
+            return true;
+        }
+    }
+
+    getLastCharacter() {
+        let lastIdx = 0;
+        if (this.numberBuilder.length) {
+            lastIdx = this.numberBuilder.length - 1;
+        }
+        return this.numberBuilder[lastIdx];
+    }
 
     evalStack() {
         while (this.stack.length > 1 && this.operatorStack.length) {

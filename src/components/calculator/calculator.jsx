@@ -10,9 +10,12 @@ class Calculator extends React.Component {
             currentDisplay: 0
         };
 
-        this.buttons = ['0', '1', '3', '+', '-', '*', '/', '=', 'AC'];
+        this.zeroDecimal = ['0', '.'];
+        this.numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
+        this.operators = ['+', '-', '*', '/', '='];
+        this.utilities = ['AC'];
 
-        this.displayButtons = this.displayButtons.bind(this);
+        this.displaySection = this.displaySection.bind(this);
         this.updateCurrentDisplay = this.updateCurrentDisplay.bind(this);
     }
 
@@ -25,10 +28,10 @@ class Calculator extends React.Component {
     }
     
 
-    displayButtons() {
+    displaySection(arr) {
         const model = this.state.model;
 
-        return this.buttons.map(val => (
+        return arr.map(val => (
             <Button
                 model={model}
                 updateCurrentDisplay={this.updateCurrentDisplay}
@@ -42,9 +45,19 @@ class Calculator extends React.Component {
         return (
             <>
                 <div>myNewCalculator</div>
-                {this.displayButtons()}
+                <div className="calculator__screen">
+                    {this.state.currentDisplay}
+                </div>
                 <br></br>
-                {this.state.currentDisplay}
+                <div className="calculator__numbers">
+                    {this.displaySection(this.numbers)}
+                </div>
+                <div className="calculator__zeroDecimal">
+                    {this.displaySection(this.zeroDecimal)}
+                </div>
+                <div className="calculator__operations">
+                    {this.displaySection(this.utilities)}
+                </div>
             </>
         )
     }

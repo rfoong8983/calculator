@@ -2,7 +2,7 @@ import CalculatorModel from '../components/calculator/calculator_model';
 
 
 describe('when building a number', () => {
-    test('it builds a decimal properly and pushes it to the stack', () => {
+    test('it builds a float properly and pushes it to the stack', () => {
         const calc = new CalculatorModel();
         calc.appendToBuilder('1');
         calc.appendToBuilder('.');
@@ -21,6 +21,30 @@ describe('when building a number', () => {
         expect(calc.stack).toHaveLength(2);
         calc.performOp('-');
         expect(calc.numberBuilder).toHaveLength(0);
+    });
+
+    describe('it handles decimals properly', () => {
+
+        test('it will not allow duplicate decimals', () => {
+            const calc = new CalculatorModel();
+            calc.appendToBuilder('1');
+            calc.appendToBuilder('.');
+            calc.appendToBuilder('.');
+            calc.appendToBuilder('1');
+            calc.appendToBuilder('.');
+            calc.appendToBuilder('1');
+            expect(calc.numberBuilder).toHaveLength(4);
+        });
+
+        test('it will correctly handle a single decimal', () => {
+            const calc = new CalculatorModel();
+            calc.appendToBuilder('.');
+            calc.appendToBuilder('.');
+            expect(calc.numberBuilder).toHaveLength(1);
+            calc.performOp('+');
+            expect(calc.numberBuilder).toHaveLength(0);
+            expect(calc.stack).toHaveLength(1);
+        });
     });
 });
 
