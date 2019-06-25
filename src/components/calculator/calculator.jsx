@@ -26,6 +26,8 @@ class Calculator extends React.Component {
     updateCurrentDisplay() {
         const model = this.state.model;
         let newDisplay = model.currentDisplay;
+
+        // if the currentDisplay is a decimal, add a zero in front
         if (newDisplay[0] === '.') newDisplay = '0' + newDisplay;
 
         this.setState(_ => {
