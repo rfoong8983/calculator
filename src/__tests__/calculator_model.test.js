@@ -787,6 +787,7 @@ describe('if the button value is equals', () => {
             expect(calc.stack).toHaveLength(1);
             expect(calc.currentDisplay).toEqual('10');
         });
+
         test('it should continue calculations (subtr)', () => {
             const calc = new CalculatorModel();
             calc.performOp('+');
@@ -805,6 +806,7 @@ describe('if the button value is equals', () => {
             expect(calc.stack).toHaveLength(1);
             expect(calc.currentDisplay).toEqual('-2');
         });
+
         test('it should continue calculations (mult)', () => {
             const calc = new CalculatorModel();
             calc.performOp('+');
@@ -823,6 +825,7 @@ describe('if the button value is equals', () => {
             expect(calc.stack).toHaveLength(1);
             expect(calc.currentDisplay).toEqual('24');
         });
+
         test('it should continue calculations (div)', () => {
             const calc = new CalculatorModel();
             calc.performOp('+');
@@ -840,6 +843,45 @@ describe('if the button value is equals', () => {
             // console.log(calc.stack, calc.operatorStack, calc.currentDisplay);
             expect(calc.stack).toHaveLength(1);
             expect(calc.currentDisplay).toEqual('0.5');
+        });
+    });
+
+    describe ('when there is only zero on the stack', () => {
+
+        test('it should perform calculations (add)', () => {
+            const calc = new CalculatorModel();
+            calc.performOp('+');
+            expect(calc.stack).toHaveLength(1);
+            calc.appendToBuilder('2');
+            calc.performOp('=');
+            expect(calc.currentDisplay).toEqual('2');
+        });
+
+        test('it should perform calculations (subtr)', () => {
+            const calc = new CalculatorModel();
+            calc.performOp('-');
+            expect(calc.stack).toHaveLength(1);
+            calc.appendToBuilder('2');
+            calc.performOp('=');
+            expect(calc.currentDisplay).toEqual('-2');
+        });
+
+        test('it should perform calculations (mult)', () => {
+            const calc = new CalculatorModel();
+            calc.performOp('*');
+            expect(calc.stack).toHaveLength(1);
+            calc.appendToBuilder('2');
+            calc.performOp('=');
+            expect(calc.currentDisplay).toEqual('0');
+        });
+
+        test('it should perform calculations (div)', () => {
+            const calc = new CalculatorModel();
+            calc.performOp('/');
+            expect(calc.stack).toHaveLength(1);
+            calc.appendToBuilder('2');
+            calc.performOp('=');
+            expect(calc.currentDisplay).toEqual('0');
         });
     });
 });

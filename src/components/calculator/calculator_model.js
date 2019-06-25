@@ -229,7 +229,10 @@ class CalculatorModel {
             // does not include 0
             '1': true, '2': true, '3': true,
             '4': true, '5': true, '6': true,
-            '7': true, '8': true, '9': true
+            '7': true, '8': true, '9': true,
+            '-1': true, '-2': true, '-3': true,
+            '-4': true, '-5': true, '-6': true,
+            '-7': true, '-8': true, '-9': true
         }
         
         if (val in validNums && len === 1 && lastChar === '0') {

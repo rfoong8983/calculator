@@ -5,9 +5,10 @@ html {
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+  /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+    sans-serif; */
+  font-family: Whitney-normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-size: cover;
@@ -34,10 +35,26 @@ code {
     monospace;
 }
 
+button {
+  border-radius: 4px;
+  background-color: rgb(255, 184, 131);
+  border: 2px solid rgb(53, 57, 67);
+  font-size: 1vw;
+}
+
+button p {
+  margin: 0;
+}
+
 button:focus {
   outline: none;
 }
 
-/* button:hover {
+button:hover {
+  background-color: rgb(222, 177, 143);
+}
 
-} */
+button:active {
+  position: relative;
+  top: 1px;
+}

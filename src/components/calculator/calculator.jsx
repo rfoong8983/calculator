@@ -12,10 +12,11 @@ class Calculator extends React.Component {
         };
 
         // Created separate arrays to organize button positions;
-        this.zeroDecimal = ['0', '.'];
-        this.numbers = ['7', '8', '9', '4', '5', '6', '1', '2', '3'];
-        this.operators = ['+', '-', '*', '/', '='];
-        this.utilities = ['AC'];
+        this.acPlus = ['AC', '+'];
+        this.numbersTopSubtr = ['7', '8', '9', '-'];
+        this.numbersMidMult = ['4', '5', '6', '*'];
+        this.numbersBotDiv = ['1', '2', '3', '/'];
+        this.zeroDecEquals = ['0', '.', '='];
 
         this.handleKeyPress = this.handleKeyPress.bind(this);
         this.displaySection = this.displaySection.bind(this);
@@ -71,25 +72,64 @@ class Calculator extends React.Component {
                     <p>{this.state.currentDisplay}</p>
                 </div>
 
-                <div className="calculator__columnWrapper">
-                    <div className="calculator__leftColumn">
-                        <div className="calculator__utilities">
-                            {this.displaySection(this.utilities)}
+                <div className="calculator__buttonRowWrapper">
+                    <div className="calculator__acPlus">
+                        {this.displaySection(this.acPlus)}
+                    </div>
+
+                    <div className="calculator__columnWrapper">
+                        <div className="calculator__numbersTopSubtr">
+                            {this.displaySection(this.numbersTopSubtr.slice(0,2))}
                         </div>
-                        <div className="calculator__numbers">
-                            {this.displaySection(this.numbers)}
-                        </div>
-                        <div className="calculator__zeroDecimal">
-                            {this.displaySection(this.zeroDecimal)}
+                        <div className="calculator__numbersTopSubtr">
+                            {this.displaySection(this.numbersTopSubtr.slice(2))}
                         </div>
                     </div>
 
-                    <div className="calculator__rightColumn">
-                        <div className="calculator__operators">
-                            {this.displaySection(this.operators)}
+                    <div className="calculator__columnWrapper">
+                        <div className="calculator__numbersMidMult">
+                            {this.displaySection(this.numbersMidMult.slice(0,2))}
+                        </div>
+                        <div className="calculator__numbersMidMult">
+                            {this.displaySection(this.numbersMidMult.slice(2))}
+                        </div>
+                    </div>
+
+                    <div className="calculator__columnWrapper">
+                        <div className="calculator__numbersBotDiv">
+                            {this.displaySection(this.numbersBotDiv.slice(0,2))}
+                        </div>
+                        <div className="calculator__numbersBotDiv">
+                            {this.displaySection(this.numbersBotDiv.slice(2))}
+                        </div>
+                    </div>
+
+                    <div className="calculator__columnWrapper">
+                        <div className="calculator__zeroDecEquals">
+                            {this.displaySection(this.zeroDecEquals.slice(0,1))}
+                        </div>
+                        <div className="calculator__zeroDecEquals">
+                            {this.displaySection(this.zeroDecEquals.slice(1))}
                         </div>
                     </div>
                 </div>
+                {/* <div className="calculator__buttonRowWrapper">
+                    <div className="calculator__acPlus">
+                        {this.displaySection(this.acPlus)}
+                    </div>
+                    <div className="calculator__numbersTopSubtr">
+                        {this.displaySection(this.numbersTopSubtr)}
+                    </div>
+                    <div className="calculator__numbersMidMult">
+                        {this.displaySection(this.numbersMidMult)}
+                    </div>
+                    <div className="calculator__numbersBotDiv">
+                        {this.displaySection(this.numbersBotDiv)}
+                    </div>
+                    <div className="calculator__zeroDecEquals">
+                        {this.displaySection(this.zeroDecEquals)}
+                    </div>
+                </div> */}
             </div>
         )
     }
