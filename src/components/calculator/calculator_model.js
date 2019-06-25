@@ -20,6 +20,7 @@ class CalculatorModel {
     }
 
     appendToBuilder(val) {
+        // builds a number from user input and updates current display
         if (this.limitNumberOfDigits()) return;
         this.resetStackAfterEquals();
         if (this.preventMultipleDecimals(val)) return;
@@ -36,6 +37,7 @@ class CalculatorModel {
     }
 
     addToStack(val) {
+        // once a number is finished being built, add to the number stack
         this.stack.push(val);
         this.currentDisplay = val.toString();
         this.lastInput = val;
@@ -50,6 +52,7 @@ class CalculatorModel {
     }
 
     performOp(op) {
+        // on performOp, move the built number to the number stack and clear buildNumber
         this.buildNumber();
 
         switch(op) {

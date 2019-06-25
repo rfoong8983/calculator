@@ -34,6 +34,8 @@ class Calculator extends React.Component {
     }
 
     handleKeyPress = (event) => {
+        // either perform an operation, clear stacks, or append to the number being built
+        // do nothing for invalid keys e.g., shift
         event.preventDefault();
         const model = this.state.model;
         if (event.key === 'Enter') event.key = '=';
@@ -49,6 +51,7 @@ class Calculator extends React.Component {
             return;
         }
 
+        // update current display on key press
         this.updateCurrentDisplay();
     }
     
@@ -114,23 +117,6 @@ class Calculator extends React.Component {
                         </div>
                     </div>
                 </div>
-                {/* <div className="calculator__buttonRowWrapper">
-                    <div className="calculator__acPlus">
-                        {this.displaySection(this.acPlus)}
-                    </div>
-                    <div className="calculator__numbersTopSubtr">
-                        {this.displaySection(this.numbersTopSubtr)}
-                    </div>
-                    <div className="calculator__numbersMidMult">
-                        {this.displaySection(this.numbersMidMult)}
-                    </div>
-                    <div className="calculator__numbersBotDiv">
-                        {this.displaySection(this.numbersBotDiv)}
-                    </div>
-                    <div className="calculator__zeroDecEquals">
-                        {this.displaySection(this.zeroDecEquals)}
-                    </div>
-                </div> */}
             </div>
         )
     }

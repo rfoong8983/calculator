@@ -11,6 +11,7 @@ class Button extends React.Component {
     }
 
     handleClick() {
+        // either perform an operation, clear stacks, or append to the number being built
         const buttonVal = this.val;
         const model = this.model;
 
@@ -22,6 +23,7 @@ class Button extends React.Component {
             model.appendToBuilder(buttonVal);
         }
         
+        // update current display on button click
         this.updateCurrentDisplay();
     }
 
