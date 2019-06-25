@@ -37,6 +37,7 @@ class Calculator extends React.Component {
         event.preventDefault();
         const model = this.state.model;
         if (event.key === 'Enter') event.key = '=';
+        if (event.key === 'Backspace') event.key = 'AC';
         
         if (model.isOperation(event.key) || model.isEquals(event.key)) {
             model.performOp(event.key);

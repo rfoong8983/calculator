@@ -57,8 +57,7 @@ class CalculatorModel {
             case '+':
             case '-':
                 if (this.lastInputIsOperation()) {
-                    this.operatorStack.pop();
-                    this.operatorStack.push(op);
+                    this.replaceLastOp(op);
                 } else {
                     this.lastInput = op;
                     this.evalStack();
@@ -70,9 +69,8 @@ class CalculatorModel {
             case '*':
             case '/':
                 if (this.lastInputIsOperation()) {
-                    this.operatorStack.pop();
-                    this.operatorStack.push(op);
-                    this.lastInput = op;
+                    this.replaceLastOp(op);
+                    
                 } else if (this.lastOpWasMultOrDiv()) {
                     this.evalLastTwoNums();
 
@@ -90,12 +88,10 @@ class CalculatorModel {
             case 'Enter':
             case '=':
                 if (this.lastInputIsOperation()) {
-                    this.operatorStack.pop();
-                    this.operatorStack.push(op);
-                    this.lastInput = op;
+                    this.replaceLastOp(op);
                 }
                 this.evalStack();
-                this.lastInput = '=';
+                this.lastInput = op;
                 break;
             default:
                 return;
@@ -132,6 +128,13 @@ class CalculatorModel {
         this.currentDisplay = result.toString();
     }
 
+    evalStack() {
+        while (this.stack.length > 1 && this.operatorStack.length) {
+            this.evalLastTwoNums();
+        }
+    }
+
+
     // helper functions
 
     buildNumber() {
@@ -151,13 +154,6 @@ class CalculatorModel {
         return true;
     }
 
-    invalidDecimal() {
-        const lastChar = this.getLastCharacter();
-        if (lastChar === '.' || this.numberBuilder.includes('.')) {
-            return true;
-        }
-    }
-
     limitNumberOfDigits() {
         if (this.numberBuilder.length === 18) {
             return true;
@@ -168,7 +164,7 @@ class CalculatorModel {
 
     preventMultipleDecimals(val) {
         const lastChar = this.getLastCharacter();
-        if ((lastChar === '.' || this.numberBuilder.includes('.')) && val === '.') {
+        if ((this.isDecimal(lastChar) || this.numberBuilder.includes('.')) && this.isDecimal(val)) {
             return true;
         } else {
             return false;
@@ -187,12 +183,6 @@ class CalculatorModel {
         return this.numberBuilder[lastIdx];
     }
 
-    evalStack() {
-        while (this.stack.length > 1 && this.operatorStack.length) {
-            this.evalLastTwoNums();
-        }
-    }
-
     getLastOperator() {
         if (this.operatorStack.length === 0) {
             return null;
@@ -204,11 +194,6 @@ class CalculatorModel {
     lastOpWasMultOrDiv() {
         const lastOp = this.getLastOperator();
         return lastOp === '*' || lastOp === '/';
-    }
-
-    lastOpIsOperation() {
-        const lastOp = this.getLastOperator();
-        return lastOp in this.ops;
     }
 
     preventMultipleZeros(val) {
@@ -240,6 +225,12 @@ class CalculatorModel {
         } 
     }
 
+    replaceLastOp(val) {
+        this.operatorStack.pop();
+        this.operatorStack.push(val);
+        this.lastInput = val;
+    }
+
     isNumber(val) {
         // created so handleKeyPress only accepts numbers
         const nums = {
@@ -250,12 +241,12 @@ class CalculatorModel {
 
         return val in nums;
     }
+    
     isDecimal(val) { return val === '.'; }
     isUtility(val) { return val in this.utilities; }
     isOperation(val) { return val in this.ops; }
     isEquals(val) { return val === '=' || val === 'Enter'; } // split out from operations for calc logic
     lastInputIsOperation() { return this.lastInput in this.ops; }
-    lastOperationIsNotSameAs(val) { return this.lastInput !== val && this.lastInputIsOperation(); }
 }
 
 export default CalculatorModel;
