@@ -1,5 +1,5 @@
 # The TI-80-poor
-A simple calculator built in JavaScript and visualized with React! Tests included
+A simple calculator built in JavaScript and visualized with React! Tests included!
 
 ### Application Details
 There are two main components that handle the updating of the UI: Calculator and Button. There is also a Calculator model which manages which buttons have been pressed and which the actual calculations.
